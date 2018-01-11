@@ -1,0 +1,15 @@
+elasticsearch==5.3
+elasticsearch-xpack==5.0.0
+zappa
+certifi
+flask==0.12.1
+flask_cors
+networkx
+matplotlib
+future
+jmespath
+python-louvain
+google-cloud-bigquery
+addict
+Flask-Env
+rope

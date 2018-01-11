@@ -1,0 +1,1843 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>LINK {{ query }}</title>
+
+
+    <!--Let browser know website is optimized for mobile-->
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"
+          integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://allyoucan.cloud/cdn/icofont/1.0.0beta/css/icofont.css"
+          integrity="sha384-+iJF6xK4xnr+UBchttOu5eVXU3O/+WiateNu6D76ixKwFPrlm5NkgTnAR35tgjMU" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.13/semantic.min.css"/>
+    <link rel="stylesheet" type="text/css"
+          href="https://cdn.datatables.net/v/se/dt-1.10.16/b-1.5.0/b-colvis-1.5.0/cr-1.4.1/fh-3.1.3/kt-2.3.2/r-2.2.1/rg-1.0.2/sc-1.4.3/sl-1.2.4/datatables.min.css"/>
+    <link href="https://fonts.googleapis.com/css?family=Cinzel+Decorative" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Cinzel" rel="stylesheet">
+
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+    <!--Import jQuery before materialize.js -->
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.13/semantic.min.js"></script>
+    <script type="text/javascript"
+            src="https://cdn.datatables.net/v/se/dt-1.10.16/b-1.5.0/b-colvis-1.5.0/cr-1.4.1/fh-3.1.3/kt-2.3.2/r-2.2.1/rg-1.0.2/sc-1.4.3/sl-1.2.4/datatables.min.js"></script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js"></script>
+
+
+    <!--<script src="https://cdn.jsdelivr.net/npm/linkurious@1.5.2/dist/sigma.require.min.js"></script> -->
+    <script src="https://cdn.jsdelivr.net/npm/linkurious@1.5.2/dist/sigma.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/linkurious@1.5.2/dist/plugins.min.js"></script>
+    <!--<script src="https://cdn.jsdelivr.net/npm/linkurious@1.5.2/dist/plugins/sigma.renderers.customEdgeShapes.min.js"></script>
+   <script src="https://cdn.jsdelivr.net/npm/linkurious@1.5.2/dist/plugins/sigma.renderers.edgeLabels.min.js"></script>
+   <script src="https://cdn.jsdelivr.net/npm/linkurious@1.5.2/dist/plugins/sigma.renderers.halo.min.js"></script>
+   <script src="https://cdn.jsdelivr.net/npm/linkurious@1.5.2/dist/plugins/sigma.renderers.glyphs.min.js"></script>
+   <script src="https://cdn.jsdelivr.net/npm/linkurious@1.5.2/dist/plugins/sigma.renderers.linkurious.min.js"></script>
+   <script src="https://cdn.jsdelivr.net/npm/linkurious@1.5.2/dist/plugins/sigma.layouts.forceLink.min.js"></script>
+   <script src="https://cdn.jsdelivr.net/npm/linkurious@1.5.2/dist/plugins/sigma.plugins.design.min.js"></script>
+   <script src="https://cdn.jsdelivr.net/npm/linkurious@1.5.2/dist/plugins/sigma.plugins.dragNodes.min.js"></script>
+   <script src="https://cdn.jsdelivr.net/npm/linkurious@1.5.2/dist/plugins/sigma.plugins.activeState.min.js"></script>
+<!--<script src="https://cdn.jsdelivr.net/npm/linkurious@1.5.2/dist/plugins/sigma.renderers.parallelEdges.min.js"></script>
+   <script src="https://cdn.jsdelivr.net/npm/linkurious@1.5.2/dist/plugins/sigma.renderers.halo.min.js"></script>
+   <script src="https://cdn.jsdelivr.net/npm/linkurious@1.5.2/dist/plugins/sigma.layouts.dagre.min.js"></script>
+   <script src="https://cdn.jsdelivr.net/npm/linkurious@1.5.2/dist/plugins/sigma.plugins.colorbrewer.min.js"></script>
+   <script src="https://cdn.jsdelivr.net/npm/linkurious@1.5.2/dist/plugins/sigma.layouts.fruchtermanReingold.min.js"></script>
+   <script src="https://cdn.jsdelivr.net/npm/linkurious@1.5.2/dist/plugins/sigma.plugins.animate.min.js"></script>
+   <script src="https://cdn.jsdelivr.net/npm/linkurious@1.5.2/dist/plugins/sigma.plugins.keyboard.min.js"></script>
+   <script src="https://cdn.jsdelivr.net/npm/linkurious@1.5.2/dist/plugins/sigma.plugins.select.min.js"></script>
+   <script src="https://cdn.jsdelivr.net/npm/linkurious@1.5.2/dist/plugins/sigma.plugins.tooltips.min.js"></script>-->
+    <!--<script src="https://cdn.jsdelivr.net/npm/linkurious@1.5.2/dist/plugins/sigma.pathfinding.astar.min.js"></script>-->
+    <!-- <script src="https://cdn.jsdelivr.net/npm/linkurious@1.5.2/dist/plugins/sigma.plugins.edgeSiblings.min.js"></script>-->
+
+
+    <style type="text/css">
+        body {
+            margin: 0;
+            background: #1f1f1f !important;
+            width: 100%;
+            color: lightgrey;
+
+        }
+
+        .pusher {
+            background: #1f1f1f !important;
+
+        }
+
+        #ubercontainer {
+            background: #1f1f1f !important;
+            color: lightgrey;
+
+        }
+
+        #container {
+            min-height: 600px;
+            width: 100%;
+            height: 80%;
+            background: #1f1f1f;
+            padding: 2rem;
+            margin: 2rem;
+            border-radius: 5px;
+        }
+
+        .label-gene {
+            background-color: #8572d4 !important;
+
+        }
+
+        .label-concept {
+            background-color: #ececec !important;
+
+        }
+
+        .label-disease {
+            background-color: #f3a83d !important;
+
+        }
+
+        .label-phenotype {
+            background-color: #f3a83d !important;
+
+        }
+
+        .label-drug {
+            background-color: #48c558 !important;
+
+        }
+
+        .unselected {
+            filter: saturate(50%) contrast(60%);
+        }
+
+        .card-gene {
+            background-color: #8572d4 !important;
+
+        }
+
+        .card-disease {
+            background-color: #f3a83d !important;
+
+        }
+
+        .card-drug {
+            background-color: #48c558 !important;
+
+        }
+
+        .image-drug {
+            background-color: ghostwhite !important;
+        }
+
+        .card-phenotype {
+            background-color: #f3a83d !important;
+
+        }
+
+        .card-concept {
+            background-color: #ececec !important;
+        }
+
+        h1 {
+            color: lightgrey !important;
+        }
+
+        h3 {
+            color: lightgrey !important;
+        }
+
+        .node-list.header {
+            margin-bottom: 1rem !important;
+        }
+
+        .loading:before {
+            font-size: 10px;
+            color: ghostwhite !important;
+        }
+
+        .breadcrumb .brand {
+            font-family: 'Cinzel Decorative', serif !important;
+            margin: 1rem !important;
+            color: ghostwhite;
+
+        }
+
+        #link-details {
+            background-color: #1f1f1f;
+            padding: 2rem;
+            color: ghostwhite;
+
+        }
+
+        #link-details .item {
+            padding: 1rem;
+            color: ghostwhite;
+
+        }
+
+        #link-year-heatmap {
+            padding: 1rem;
+        }
+
+        #link-year-heatmap .ui.label {
+            margin-top: 0.5rem !important;
+        }
+
+        #selected-links-container {
+            min-height: 2rem;
+            background-color: #1f1f1f;
+        }
+
+        .sentence {
+            background-color: #1f1f1f !important;
+            padding: 0.5rem !important;
+            margin-top: 0.5rem !important;
+            margin-bottom: 0 !important;
+            color: ghostwhite;
+
+        }
+
+        [data-entity] {
+            padding: 0.25em 0.35em;
+            margin: 0px 0.25em;
+            line-height: 1;
+            display: inline-block;
+            border-radius: 0.25em;
+            border: 1px solid;
+        }
+
+        [data-entity]::after {
+            box-sizing: border-box;
+            content: attr(data-entity);
+            font-size: 0.8em;
+            line-height: 1;
+            padding: 0.35em;
+            border-radius: 0.35em;
+            text-transform: uppercase;
+            display: inline-block;
+            vertical-align: middle;
+            margin: 0px 0px 0.1rem 0.5rem;
+            color: black;
+
+        }
+
+        [data-entity][data-entity="GENE"] {
+            background: rgba(133, 114, 212, 0.2);
+            border-color: rgb(133, 114, 212);
+        }
+
+        [data-entity][data-entity="GENE"]::after {
+            background: rgb(133, 114, 212);
+        }
+
+        [data-entity][data-entity="DISEASE"] {
+            background: rgba(243, 168, 61, 0.2);
+            border-color: rgb(243, 168, 61);
+        }
+
+        [data-entity][data-entity="DISEASE"]::after {
+            background: rgb(243, 168, 61);
+        }
+
+        [data-entity][data-entity="DISEASEALT"] {
+            background: rgba(243, 168, 61, 0.2);
+            border-color: rgb(243, 168, 61);
+        }
+
+        [data-entity][data-entity="DISEASEALT"]::after {
+            background: rgb(243, 168, 61);
+        }
+
+        [data-entity][data-entity="PHENOTYPE"] {
+            background: rgba(243, 168, 61, 0.2);
+            border-color: rgb(243, 168, 61);
+        }
+
+        [data-entity][data-entity="PHENOTYPE"]::after {
+            background: rgb(243, 168, 61);
+        }
+
+        [data-entity][data-entity="DRUG"] {
+            background: rgba(72, 197, 88, 0.2);
+            border-color: rgb(72, 197, 88);
+        }
+
+        [data-entity][data-entity="DRUG"]::after {
+            background: rgb(72, 197, 88);
+        }
+
+        [data-entity][data-entity="CONCEPT"] {
+            background: rgba(236, 236, 236, 0.2);
+            border-color: rgb(236, 236, 236);
+        }
+
+        [data-entity][data-entity="CONCEPT"]::after {
+            background: rgb(236, 236, 236);
+        }
+
+        .breadcrumb a {
+            color: #c22324 !important;
+        }
+
+        .red {
+            background-color: #c22324 !important;
+        }
+
+        .icon.red {
+            background-color: transparent !important;
+        }
+        .icon.red:before {
+            color: #c22324 !important;
+        }
+
+    </style>
+</head>
+
+<body>
+<div id="ubercontainer">
+    <div class="ui sidebar vertical menu right inverted">
+        <a class="item">
+            <form class="ui form inverted">
+                <div class="field">
+                    <input class="prompt validate"
+                           type="text"
+                           placeholder="Search for entities..."
+                           id="query"
+                           name="query"
+                           required="true"
+                           value="{{ query }}">
+
+                    <label><i class="search icon"></i> Search</label>
+                </div>
+                <div class=" field">
+                    <div class="ui">
+                        <input type="number" name="elements" placeholder="5" value="5">
+                        <label>Nodes</label>
+                    </div>
+                </div>
+                <div class=" field">
+                    <div class="ui">
+                        <input type="number" name="min_doc_count" placeholder="3">
+                        <label>Minimum Links</label>
+                    </div>
+                </div>
+                <div class=" field">
+                    <div class="ui selection dropdown">
+                        <input type="hidden" name="mode">
+                        <i class="dropdown icon"></i>
+                        <div class="default text">Specificity</div>
+                        <div class="menu">
+                            <div class="item" data-value="specificity">Specificity</div>
+                            <div class="item" data-value="popularity">Popularity</div>
+                        </div>
+                    </div>
+                    <label>Mode</label>
+                </div>
+                <div class=" field">
+                    <div class="ui selection dropdown">
+                        <input type="hidden" name="score">
+                        <i class="dropdown icon"></i>
+                        <div class="default text">Pagerank</div>
+                        <div class="menu">
+                            <div class="item" data-value="significance">Specificity</div>
+                            <div class="item" data-value="pagerank">Pagerank</div>
+                        </div>
+                    </div>
+                    <label>Score</label>
+                </div>
+                <div class=" field">
+                    <div class="ui selection dropdown multiple entity-type ">
+                        <input type="hidden" name="entity_type">
+                        <i class="dropdown icon"></i>
+                        <div class="default text">Pagerank</div>
+                        <div class="menu">
+                            <div class="item" data-value="GENE">GENE</div>
+                            <div class="item" data-value="DISEASE">DISEASE</div>
+                            <div class="item" data-value="PHENOTYPE">PHENOTYPE</div>
+                            <div class="item" data-value="DRUG">DRUG</div>
+                            <div class="item" data-value="CONCEPT">CONCEPT</div>
+                        </div>
+                    </div>
+                    <label>Entity type</label>
+                </div>
+                <div class=" field">
+                    <button class="ui button submit red" type="submit">GO</button>
+                </div>
+            </form>
+        </a>
+
+    </div>
+
+    <div class="ui container pusher ">
+        <div class="ui breadcrumb">
+            <span class="brand">LINK</span>
+            <div class="divider"> |</div>
+
+            <a class="section" href="ui">Home</a>
+            <div class="divider"> /</div>
+            <div class="active section">Search Results</div>
+        </div>
+        <button class="ui  right floated toggle button secondary">
+            <i class="sidebar icon"></i>
+        </button>
+        <h3 class="ui header centered inverted">
+            Results for "<span class="query grey">{{ query }}</span>"
+        </h3>
+        <div class="ui data  divided items container inverted" id="data-container">
+            <section class="graph ">
+                <div class="ui active dimmer" id="data-loader">
+                    <div class="ui huge text loader">Loading</div>
+                </div>
+                <div class="ui button right floated button secondary animated vertical" id="graph-zoom-in">
+                    <div class="hidden content">Zoom +</div>
+                    <div class="visible content">
+                        <i class="zoom icon "></i>
+                    </div>
+                </div>
+                <div class="ui button right floated button secondary animated vertical" id="graph-zoom-out">
+                    <div class="hidden content">Zoom -</div>
+                    <div class="visible content">
+                        <i class="zoom out icon "></i>
+                    </div>
+                </div>
+                <div class="ui button right floated button secondary animated vertical" id="graph-zoom-reset">
+                    <div class="hidden content">Fill</div>
+                    <div class="visible content">
+                        <i class="maximize icon "></i>
+                    </div>
+                </div>
+                <!--<div class="ui button right floated button secondary animated vertical" id="graph-fullscreen">
+                    <div class="hidden content">Full</div>
+                    <div class="visible content">
+                        <i class="expand icon "></i>
+                    </div>
+                </div>-->
+                <div class="ui button right floated button secondary animated vertical" id="graph-grid-layout">
+                    <div class="hidden content">Grid</div>
+                    <div class="visible content">
+                        <i class="grid layout icon "></i>
+                    </div>
+                </div>
+                <div class="ui button right floated button secondary animated vertical" id="graph-force-layout">
+                    <div class="hidden content">Force</div>
+                    <div class="visible content">
+                        <i class="magnet icon "></i>
+                    </div>
+                </div>
+                <div class="ui button right floated button secondary animated vertical" id="graph-export-image">
+                    <div class="hidden content">Export</div>
+                    <div class="visible content">
+                        <i class="image icon "></i>
+                    </div>
+                </div>
+                <div id="container" class="item  container ui fluid"></div>
+            </section>
+            <button class="ui button secondary right floated labeled icon hidden" id="clear-selection">
+                <i class="delete icon "></i>
+                Clear
+            </button>
+
+
+            <section class="ui horizontal segments" id="selected-links-container">
+
+            </section>
+            <section class="container inverted graph-detail">
+                <div class="ui top attached tabular menu inverted graph-detail">
+                    <a class="item active" data-tab="nodes">Entities</a>
+                    <a class="item" data-tab="edges">Connections</a>
+                    <a class="item" data-tab="sentences">Sentences</a>
+                </div>
+
+                <div class="ui node-list item container segment graph-detail-item inverted tab active" data-tab="nodes">
+                    <p> Click two nodes to show their connections </p>
+
+                    <div class="ui four column very relaxed grid ">
+                        <div class="column">
+                            <div class="ui ">
+                                <h3 class="ui header centered aligned">
+                                    <i class="ui icon" style=" font-family: IcoFont; font-size: 2rem;">&#xecf4; </i>
+                                    Gene
+                                </h3>
+                            </div>
+                            <div class="ui horizontal list gene-list node-container">
+
+                            </div>
+                        </div>
+                        <!-- <div class="ui vertical divider"> </div> -->
+                        <div class="column">
+                            <div class="ui ">
+                                <h3 class="ui header centered aligned">
+                                    <i class="ui icon" style=" font-family: IcoFont; font-size: 2rem;">&#xee64; </i>
+                                    Disease and Phenotype
+                                </h3>
+                            </div>
+                            <div class="ui horizontal list disease-list node-container">
+
+                            </div>
+                        </div>
+                        <!-- <div class="ui vertical divider"> </div> -->
+                        <div class="column">
+                            <div class="ui ">
+                                <h3 class="ui header  centered aligned">
+                                    <i class="ui icon" style=" font-family: IcoFont; font-size: 2rem;">&#xecf2; </i>
+                                    Drug
+                                </h3>
+                            </div>
+                            <div class="ui horizontal list drug-list node-container">
+
+                            </div>
+
+                        </div>
+                        <div class="column">
+                            <div class="ui ">
+                                <h3 class="ui header  centered aligned">
+                                    <i class="ui icon icofont icofont-atom"></i>
+                                    Key Concept
+                                </h3>
+                            </div>
+                            <div class="ui horizontal list concept-list node-container">
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="ui edge-list item container segment graph-detail-item inverted tab" data-tab="edges">
+                    <p> Click on a row to show the sentences </p>
+
+                    <table class="ui table striped inverted" id="edge-table">
+                        <thead>
+                        <tr>
+                            <th>Source</th>
+                            <th>Target</th>
+                            <th>Links</th>
+                            <th>Score</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+
+                </div>
+                <div class="ui node-list item container segment graph-detail-item inverted tab" data-tab="sentences">
+                    <p class="ui subheader">For links with subject-predicate-object structure</p>
+                    <div class="ui  container">
+
+                        <div class="ui header " id="link-summary"></div>
+                        <div class="ui disabled dimmer" id="link-details-loader">
+                            <div class="ui large text loader">Loading</div>
+                        </div>
+                        <div class="ui " id="link-year-heatmap">
+                        </div>
+                        <div class="ui list divided inverted" id="link-details">
+
+                            <p class="ui message inverted">Please select a connection between two entities</p>
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+</div>
+
+
+<script type="text/javascript">
+
+    // modified version of astar plugin
+
+    (function () {
+        'use strict';
+
+        if (typeof sigma === 'undefined') {
+            throw 'sigma is not declared';
+        }
+
+
+        // Default function to compute path length between two nodes:
+        // the euclidian
+        var defaultPathLengthFunction = function (node1, node2, previousPathLength) {
+            var isEverythingDefined =
+                node1 != undefined &&
+                node2 != undefined &&
+                node1.x != undefined &&
+                node1.y != undefined &&
+                node2.x != undefined &&
+                node2.y != undefined;
+            if (!isEverythingDefined) {
+                return undefined;
+            }
+
+            return (previousPathLength || 0) + Math.sqrt(
+                Math.pow((node2.y - node1.y), 2) + Math.pow((node2.x - node1.x), 2)
+            );
+        };
+        sigma.classes.graph.addMethod('neighbors', function (nodeId) {
+            var i, neighbors = {};
+            var nodeNeighbors = this.allNeighborsIndex.get(nodeId);
+            if (!nodeNeighbors) {
+                return neighbors;
+            }
+            var index = nodeNeighbors.keyList() || {};
+            for (i = 0; i < index.length; i++) {
+                neighbors[index[i]] = this.nodesIndex.get(index[i]);
+            }
+            return neighbors;
+        });
+        sigma.classes.graph.addMethod(
+            'astarMod',
+            function (srcId, destId, settings) {
+                var currentSettings = new sigma.classes.configurable(
+                    // Default settings
+                    {
+                        // Graph is directed, affects which edges are taken into account
+                        undirected: false,
+                        // Function to compute the distance between two connected node
+                        pathLengthFunction: defaultPathLengthFunction,
+                        // Function to compute an distance between two nodes
+                        // if undefined, uses pathLengthFunction
+                        heuristicLengthFunction: undefined
+                    },
+                    settings || {});
+
+                var pathLengthFunction = currentSettings("pathLengthFunction"),
+                    heuristicLengthFunction = currentSettings("heuristicLengthFunction") || pathLengthFunction;
+
+                var srcNode = this.nodes(srcId),
+                    destNode = this.nodes(destId);
+
+                var closedList = {},
+                    openList = [];
+
+                var addToLists = function (node, previousNode, pathLength, heuristicLength) {
+                    var nodeId = node.id;
+                    var newItem = {
+                        pathLength: pathLength,
+                        heuristicLength: heuristicLength,
+                        node: node,
+                        nodeId: nodeId,
+                        previousNode: previousNode
+                    };
+
+                    if (closedList[nodeId] === undefined || closedList[nodeId].pathLenth > pathLength) {
+                        closedList[nodeId] = newItem;
+
+                        var item;
+                        var i;
+                        for (i = 0; i < openList.length; i++) {
+                            item = openList[i];
+                            if (item.heuristicLength > heuristicLength) {
+                                break;
+                            }
+                        }
+
+                        openList.splice(i, 0, newItem);
+                    }
+                };
+
+                addToLists(srcNode, null, 0, 0);
+
+                var pathFound = false;
+
+                // Depending of the type of graph (directed or not),
+                // the neighbors are either the out neighbors or all.
+                var allNeighbors = {};
+                if (currentSettings("undirected")) {
+                    allNeighbors = this.allNeighborsIndex;
+                    console.log(this.allNeighborsIndex);
+                }
+                else {
+                    allNeighbors = this.outNeighborsIndex;
+                }
+
+
+                var inspectedItem,
+                    neighbors,
+                    neighbor,
+                    pathLength,
+                    heuristicLength,
+                    i;
+                while (openList.length > 0) {
+                    inspectedItem = openList.shift();
+
+                    // We reached the destination node
+                    if (inspectedItem.nodeId == destId) {
+                        pathFound = true;
+                        break;
+                    }
+                    var alln = this.neighbors(inspectedItem.nodeId);
+                    if (alln === undefined || alln === null) {
+                        neighbors = [];
+                    } else {
+                        neighbors = Object.keys(alln);
+                    }
+                    for (i = 0; i < neighbors.length; i++) {
+                        neighbor = this.nodes(neighbors[i]);
+                        pathLength = pathLengthFunction(inspectedItem.node, neighbor, inspectedItem.pathLength);
+                        heuristicLength = heuristicLengthFunction(neighbor, destNode);
+                        addToLists(neighbor, inspectedItem.node, pathLength, heuristicLength);
+                    }
+                }
+
+                if (pathFound) {
+                    // Rebuilding path
+                    var path = [],
+                        currentNode = destNode;
+
+                    while (currentNode) {
+                        path.unshift(currentNode);
+                        currentNode = closedList[currentNode.id].previousNode;
+                    }
+                    console.log('path found', path);
+                    return path;
+                }
+                else {
+                    console.log('path not found');
+                    return undefined;
+                }
+            }
+        );
+    }).call(window);
+
+    $(document).ready(function () {
+        WebFont.load({
+            custom: {
+                families: ['icofont',]
+            },
+            active: function () {
+                $('.right.sidebar').first()
+                    .sidebar('attach events', '.toggle.button')
+                ;
+                $(' .menu .item')
+                    .tab()
+                ;
+                $('.toggle.button')
+                    .removeClass('disabled')
+                ;
+                $('.ui.checkbox')
+                    .checkbox()
+                ;
+                $('.ui.dropdown')
+                    .dropdown()
+                ;
+                $('.ui.dropdown.entity-type').dropdown('set selected', ['GENE', 'DISEASE', 'PHENOTYPE', 'DRUG', 'CONCEPT']);
+
+                $.ajaxSetup({
+                    timeout: 300000 // in milliseconds
+                });
+
+                // Create a custom color palette:
+                var myPalette = {
+                        aQualitativeScheme: {
+                            'DRUG': '#48c558',
+                            'GENE': '#8572d4',
+                            'DISEASE': '#f3a83d',
+                            'PHENOTYPE': '#f3a83d',
+                            'CONCEPT': '#ececec'
+
+                        },
+                        colorbrewer: {
+                            sequentialGreen: sigma.plugins.colorbrewer.BuGn,
+                            sequenciaGrey: sigma.plugins.colorbrewer.Greys
+                        },
+                        ggplot2: {
+                            sequentialBlue: {
+                                7: ['#132b43', '#1d3f5d', '#27547a', '#326896', '#3d7fb5', '#4897d4', '#54aef3']
+                            }
+                        },
+                        aSetScheme: {
+                            7: ["#e41a1c", "#377eb8", "#4daf4a", "#984ea3", "#ff7f00", "#ffff33", "#a65628"]
+                        },
+                        aGreys: {
+                            9: ['#ffffff',
+                                '#f0f0f0',
+                                '#d9d9d9',
+                                '#bdbdbd',
+                                '#969696',
+                                '#737373',
+                                '#525252',
+                                '#252525',
+                                '#000000'
+                            ],
+                            7: [
+                                'rgba(37,37,37,100)',
+                                'rgba(82,82,82,100)',
+                                'rgba(115,115,115,100)',
+                                'rgba(150,150,150,100)',
+                                'rgba(189,189,189,100)',
+                                'rgba(217,217,217,100)',
+                                'rgba(240,240,240,100)'
+                            ],
+                            5: [
+                                'rgba(82,82,82,100)',
+                                'rgba(115,115,115,100)',
+                                'rgba(150,150,150,100)',
+                                'rgba(189,189,189,100)',
+                                'rgba(217,217,217,100)'
+                            ],
+                            6: [
+                                'rgba(82,82,82,100)',
+                                'rgba(115,115,115,100)',
+                                'rgba(150,150,150,100)',
+                                'rgba(189,189,189,100)',
+                                'rgba(217,217,217,100)',
+                                'rgba(240,240,240,100)'
+                            ]
+
+                        },
+                        // nodeTypeScheme: {
+                        //     'GENE': 'square',
+                        //     'DISEASE': 'diamond',
+                        //     'DRUG': 'star',
+                        //     'PHENOTYPE': 'diamond'
+                        // },
+                        edgeTypeScheme: {
+                            'A':
+                                'curve'
+                        }
+                        ,
+
+                        iconScheme: {
+                            'GENE':
+                                {
+                                    font: 'IcoFont',
+                                    scale:
+                                        1.0,
+                                    color:
+                                        '#111',
+                                    content:
+                                        "\uecf4"
+                                }
+                            ,
+                            'DISEASE':
+                                {
+                                    font: 'IcoFont',
+                                    scale:
+                                        1.0,
+                                    color:
+                                        '#111',
+                                    content:
+                                        "\uee64"
+                                }
+                            ,
+                            'PHENOTYPE':
+                                {
+                                    font: 'IcoFont',
+                                    scale:
+                                        1.0,
+                                    color:
+                                        '#111',
+                                    content:
+                                        "\uee64"
+                                }
+                            ,
+                            'DRUG':
+                                {
+                                    font: 'IcoFont',
+                                    scale:
+                                        1.0,
+                                    color:
+                                        '#111',
+                                    content:
+                                        "\uecf2"
+                                }
+                            ,
+                            'CONCEPT':
+                                {
+                                    font: 'IcoFont',
+                                    scale:
+                                        1.0,
+                                    color:
+                                        '#111',
+                                    content:
+                                        "\ueb8d"
+                                }
+                        }
+                    }
+                ;
+                var myStyles = {
+                    nodes: {
+                        label: {
+                            by: 'label',
+                            format: function (value) {
+                                return value;
+                            }
+                        },
+                        size: {
+                            by: 'size',
+                            bins: 8,
+                            min: 4,
+                            max: 20
+                        },
+                        color: {
+                            by: 'category',
+                            scheme: 'aQualitativeScheme'
+                        },
+                        // type: {
+                        //     by: 'category',
+                        //     scheme: 'nodeTypeScheme'
+                        // },
+
+                        icon: {
+                            by: 'category',
+                            scheme: 'iconScheme'
+                        }
+                    },
+                    edges: {
+                        color: {
+                            by: 'size',
+                            scheme: 'aGreys',
+                            bins: 5
+                        },
+                        size: {
+                            by: 'size',
+                            bins: 100,
+                            min: 0.1,
+                            max: 5
+                        },
+                        type: { // not implemented in webgl renderer
+                            by: 'relation',
+                            scheme: 'edgeTypeScheme'
+                        }
+                    }
+                };
+
+                // Let's first initialize sigma:
+                var s = new sigma({
+                    //graph: g,
+                    renderer: {
+                        container: document.getElementById('container'),
+                        type: 'canvas'
+                    },
+                    settings: {
+                        edgeLabelThreshold: 3,
+                        minEdgeSize: 1,
+                        maxEdgeSize: 20,
+                        drawLabels: true,
+                        dragNodeStickiness: 0.01,
+                        nodeBorderSize: 2,
+                        defaultNodeBorderColor: '#444',
+                        enableEdgeHovering: true,
+                        edgeHoverHighlightNodes: 'circle',
+                        edgeLabelSize: 'proportional',
+                        nodeHaloColor: '#bbb',
+                        edgeHaloColor: '#c8cbcc',
+                        nodeHaloSize: 5,
+                        edgeHaloSize: 0,
+                        hideEdgesOnMove: false,
+                        animationsTime: 2000,
+                        defaultLabelColor: 'lightgrey',
+                    }
+                });
+
+                function RefreshTable(data) {
+                    oSettings = linkTable.fnSettings();
+
+                    linkTable.fnClearTable(this);
+
+                    for (var i = 0; i < data.length; i++) {
+                        linkTable.oApi._fnAddData(oSettings, data[i]);
+                    }
+
+                    oSettings.aiDisplay = oSettings.aiDisplayMaster.slice();
+                    linkTable.fnDraw();
+                }
+
+
+                var link_count_neg = 0;
+                var link_count_pos = 0;
+                var link_count_neu = 0;
+
+                function UpdateLinkDetail(data, init_counter, sourceId, targetId) {
+                    var pair;
+                    var element_data;
+                    var heatmap = '';
+                    if (init_counter) {
+                        $("#link-details").empty();
+                        $("#link-details-loader").addClass('active');
+                        $('.ui.menu').find('.item').tab('change tab', 'sentences');
+
+
+                        link_count_neg = 0;
+                        link_count_pos = 0;
+                        link_count_neu = 0;
+                        data.histogram.forEach(function (hist) {
+                            heatmap += '<a class=" ui image label grey ">' + hist[0] + '<div class="detail">' + hist[1] + '</div><a>';
+                        });
+                        $('#link-year-heatmap').html(heatmap);
+                    }
+
+                    for (var i = 0; i < data.results.length; i++) {
+                        pair = data.results[i];
+                        element_data = "<div class=\"item\">\n"
+                        if (pair.verbSentiment >= 1) {
+                            element_data += "<i class=\"icofont icofont-rounded-up icon large inverted\"></i>\n";
+                            link_count_pos += 1
+                        } else if (pair.verbSentiment <= -1) {
+                            element_data += "<i class=\"icofont icofont-rounded-down icon large inverted\"></i>\n"
+                            link_count_neg += 1
+                        }
+                        else {
+                            element_data += "<i class=\"icofont icofont-rounded-expand icon large inverted\"></i>\n"
+                            link_count_neu += 1
+                        }
+                        element_data += "<div class=\"content\">\n"
+                        element_data += "<a class=\"header\">"
+                        pair.subjectMatches.forEach(function (matched) {
+                            if (matched.category === 'GENE') {
+                                element_data += "<a class=\"ui label-gene image label\">\n" + matched.label +
+                                    "    <div class=\"detail\">" + matched.match + "</div>\n</a>\n"
+                            } else if (matched.category === 'DISEASE') {
+                                element_data += "<a class=\"ui label-disease image label\">\n" + matched.label +
+                                    "    <div class=\"detail\">" + matched.match + "</div>\n</a>\n"
+                            } else if (matched.category === 'PHENOTYPE') {
+                                element_data += "<a class=\"ui label-phenotype image label\">\n" + matched.label +
+                                    "    <div class=\"detail\">" + matched.match + "</div>\n</a>\n"
+                            } else if (matched.category === 'DRUG') {
+                                element_data += "<a class=\"ui label-drug image label\">\n" + matched.label +
+                                    "    <div class=\"detail\">" + matched.match + "</div>\n</a>\n"
+                            }
+                            else if (matched.category === 'CONCEPT') {
+                                element_data += "<a class=\"ui label-concept image label\">\n" + matched.label +
+                                    "    <div class=\"detail\">" + matched.match + "</div>\n</a>\n"
+                            }
+                        });
+                        if (pair.isNegative) {
+                            element_data += "<a class=\"ui label\"><i class=\"minus icon\"></i>" +
+                                pair.verb +
+                                "</a>"
+                        } else {
+                            element_data += "<a class=\"ui label\">" +
+                                pair.verb +
+                                "</a>"
+                        }
+                        pair.objectMatches.forEach(function (matched) {
+                            if (matched.category === 'GENE') {
+                                element_data += "<a class=\"ui label-gene image label\">\n" + matched.label +
+                                    "    <div class=\"detail\">" + matched.match + "</div>\n</a>\n"
+                            } else if (matched.category === 'DISEASE') {
+                                element_data += "<a class=\"ui label-disease image label\">\n" + matched.label +
+                                    "    <div class=\"detail\">" + matched.match + "</div>\n</a>\n"
+                            } else if (matched.category === 'PHENOTYPE') {
+                                element_data += "<a class=\"ui label-phenotype image label\">\n" + matched.label +
+                                    "    <div class=\"detail\">" + matched.match + "</div>\n</a>\n"
+                            } else if (matched.category === 'DRUG') {
+                                element_data += "<a class=\"ui label-drug image label\">\n" + matched.label +
+                                    "    <div class=\"detail\">" + matched.match + "</div>\n</a>\n"
+                            } else if (matched.category === 'CONCEPT') {
+                                element_data += "<a class=\"ui label-concept image label\">\n" + matched.label +
+                                    "    <div class=\"detail\">" + matched.match + "</div>\n</a>\n"
+                            }
+                        });
+
+                        element_data += "</a>\n";
+                        element_data += "<div class=\"description\">";
+                        element_data += '<p class="sentence ui message inverted">' + pair['sentence'] + " </p><a target=\"_blank\" href =\"https://www.ncbi.nlm.nih.gov/pubmed/" +
+                            pair.pubid + "\"class=\"ui image label grey pointing \"><i class=\"linkify icon\"></i>" +
+                            'PubMed: ' + pair.pubid +
+                            '<div class="detail">' + pair.date + '</div></a>';
+                        element_data += "</div>\n</div>\n</div>";
+                        $("#link-details").append(element_data)
+
+                    }
+                    //console.log( 'tab path',$.tab('get path'	));
+                    var otString = '';
+                    if (sourceId.startsWith('ENSG') && targetId.startsWith('EFO_')) {
+
+                        otString = '<a target="_blank" href="https://www.targetvalidation.org/evidence/' + sourceId + '/' + targetId + '" class="ui label">OpenTargets <i class="external icon"></i></a>'
+                    } else if (targetId.startsWith('ENSG') && sourceId.startsWith('EFO_')) {
+                        otString = '<a target="_blank" href="https://www.targetvalidation.org/evidence/' + targetId + '/' + sourceId + '" class="ui label">OpenTargets <i class="external icon"></i></a>'
+                    }
+                    $('#link-summary').html("<h5><a class=\"ui label\"><i class=\"icofont icofont-rounded-up icon large\"></i>" +
+                        link_count_pos +
+                        "</a><a class=\"ui label\"><i class=\"icofont icofont-rounded-expand icon large\"></i>" + link_count_neu +
+                        "</a><a class=\"ui label\"><i class=\"icofont icofont-rounded-down icon large\"></i>" + link_count_neg +
+                        "</a>" + otString + "</h5\n");
+                    $("#link-details-loader").removeClass('active');
+                    $("#link-details-loader").removeClass('disabled');
+
+                }
+
+
+                $.get("{{ data_feed }}?" + location.search.substr(1), function (data) {
+                    //            $(".result").html(data);
+                    var linkTable = $('#edge-table').dataTable({
+                        data: data.table,
+                        scrollY: '50vh',
+                        scrollCollapse: true,
+                        paging: false,
+                        order: [[3, "desc"],
+                            [2, "desc"]],
+                        columns: [
+                            {title: "Source"},
+                            {title: "Target"},
+                            {title: "Links"},
+                            {title: "Score"}
+                        ],
+                        columnDefs: [
+                            {
+                                "render": function (data, type, row) {
+                                    if (data) {
+                                        var cellData = data.split('|')
+                                        var returnSpan = "<span "
+                                        if (cellData[2] === 'GENE') {
+                                            returnSpan += "class=\" ui  label  medium label-gene \" reference=\"" + cellData[1] + "\" >";
+                                            returnSpan += "<i class=\"ui icon\" style=\" font-family: IcoFont\">&#xecf4; </i>";
+                                        }
+                                        else if (cellData[2] === 'DISEASE') {
+                                            returnSpan += "class=\"  label-disease  medium label ui \" reference=\"" + cellData[1] + "\" >";
+                                            returnSpan += "<i class=\"ui icon\" style=\" font-family: IcoFont\">&#xee64; </i>";
+                                        }
+                                        else if (cellData[2] === 'PHENOTYPE') {
+                                            returnSpan += "class=\"  label-disease  medium label ui \" reference=\"" + cellData[1] + "\" >";
+                                            returnSpan += "<i class=\"ui icon\" style=\" font-family: IcoFont\">&#xee64; </i>";
+                                        }
+                                        else if (cellData[2] === 'DRUG') {
+                                            returnSpan += "class=\"  label-drug medium  label ui \" reference=\"" + cellData[1] + "\" >";
+                                            returnSpan += "<i class=\"ui icon\" style=\" font-family: IcoFont\">&#xecf2; </i>";
+                                        }
+                                        else if (cellData[2] === 'CONCEPT') {
+                                            returnSpan += "class=\"  label-concept medium  label ui \" reference=\"" + cellData[1] + "\" >";
+                                            returnSpan += "<i class=\"ui icon icofont icofont-atom\"></i>";
+                                        }
+
+                                        returnSpan += cellData[0] + "<a  class = \"detail\" style=\" font-family: IcoFont\;\" href = \"{{ url }}" + "view?query=" + cellData[1] + "\"><i class=\"ui icon search\"></i></span>"
+                                        return returnSpan
+                                    } else {
+                                        return ''
+                                    }
+                                },
+                                "targets": [0, 1]
+                            }
+
+                        ]
+
+                    });
+
+                    // Util function
+                    var defaultPathLengthFunction = function (node1, node2, previousPathLength) {
+                        var isEverythingDefined =
+                            node1 != undefined &&
+                            node2 != undefined &&
+                            node1.x != undefined &&
+                            node1.y != undefined &&
+                            node2.x != undefined &&
+                            node2.y != undefined;
+                        if (!isEverythingDefined) {
+                            return undefined;
+                        }
+                        return (previousPathLength || 0) + Math.sqrt(
+                            Math.pow((node2.y - node1.y), 2) + Math.pow((node2.x - node1.x), 2)
+                        );
+                    };
+                    // Add nodes and edges
+                    var getNodeId = function (i, j) {
+                        return i + '.' + j;
+                    }
+                    var getEdgeId = function (nodeId1, nodeId2) {
+                        return [nodeId1 + '-' + nodeId2, nodeId2 + '-' + nodeId1]
+                    }
+
+                    function computeAndDrawPath(srcId, destId, boundaryColor, pathColor, edgeColor) {
+                        var path = s.graph.astarMod(srcId, destId, {
+                            undirected: true,
+                            pathLengthFunction: defaultPathLengthFunction
+                        });
+                        var tableQuery = [];
+                        if (path) {
+                            design.apply();
+                            for (var i = 0; i < path.length; i++) {
+                                tableQuery.push(path[i].label);
+                                path[i].color = pathColor;
+                                path[i].hidden = false;
+                                //path[i].borderSize = 3;
+                                var description = '';
+                                var subheader = path[i].category;
+                                var category = path[i].category;
+                                var label = path[i].label;
+                                var truncate_ending = '...';
+                                var nodeData = ''
+                                if (category === 'GENE') {
+                                    label += ' <a href="https://www.targetvalidation.org/target/' + path[i].id + '" target="_blank"><i class="external icon black"></i></a>'
+                                } else if (category === 'DISEASE') {
+                                    label += ' <a href="https://www.targetvalidation.org/disease/' + path[i].id + '"target="_blank"><i class="external icon black"></i></a>'
+                                } else if (category === 'DRUG') {
+                                    label += ' <a href="https://www.ebi.ac.uk/chembl/compound/inspect/' + path[i].id + '"target="_blank"><i class="external icon black"></i></a>'
+                                }
+
+                                nodeData += '<div id="selected-target" class="segment raised ">\n' +
+                                    '                <div class="ui cards  inverted"><div class="card card-' +
+                                    category.toLowerCase() + '">' +
+                                    '                <div class="content detail-' + path[i].id + '">\n' +
+                                    '                    <div class="header">' + label + '</div>\n' +
+                                    '                    <div class="meta">' + subheader + '</div>\n' +
+                                    '                    <div class="description">' + description + '</div>\n' +
+                                    '                </div></div>\n' +
+                                    '                </div>\n' +
+                                    '            </div>';
+                                $("#selected-links-container").append(nodeData);
+
+
+                                if (i > 0) {
+                                    var edges = getEdgeId(path[i - 1].id, path[i].id);
+                                    console.log(edges);
+                                    var edge = s.graph.edges(edges[0]);
+                                    if (edge) {
+                                        edge.color = edgeColor;
+                                        edge.size += 50;
+                                        edge.hidden = false;
+                                    } else {
+                                        edge = s.graph.edges(edges[1]);
+                                        if (edge) {
+                                            edge.color = edgeColor;
+                                             edge.size += 50;
+                                            edge.hidden = false;
+
+                                        }
+                                    }
+                                }
+                                if (i < path.length - 1) {
+                                    $("#selected-links-container").append('<div class="ui label segment compact secondary center aligned"><i class="right arrow icon huge  red inverted selection-connector" reference="' + path[i].id + '|' + path[i + 1].id + '"></i></div>');
+                                }
+                                if (category === 'GENE') {
+                                    (function (nodeId, category) {
+                                        $.get("https://api.opentargets.io/v3/platform/private/target/" + nodeId, function (data) {
+                                            if (data.approved_name !== undefined) {
+                                                var subheader = data.approved_name;
+                                            }
+                                            if (data.uniprot_function !== undefined) {
+                                                var description = data.uniprot_function[0];
+                                                if (description.length > 250) {
+                                                    description = description.substring(0, 250 - truncate_ending.length) + truncate_ending;
+                                                }
+                                            }
+                                            $('.detail-' + nodeId + ' > .meta').html(category);
+                                            $('.detail-' + nodeId + ' > .description').html(description);
+                                        });
+                                    }(path[i].id, category))
+                                } else if (category === 'DRUG') {
+                                    (function (nodeId) {
+                                        $('.detail-' + nodeId + ' > .description').html('<img class="ui image centered bordered medium image-drug" src="https://www.ebi.ac.uk/chembl/compound/displayimage_large/' + nodeId + '">');
+                                    }(path[i].id))
+                                } else if (category === 'DISEASE') {
+                                    (function (nodeId, category) {
+                                        $.get("https://api.opentargets.io/v3/platform/private/disease/" + nodeId, function (data) {
+                                            //if (data.label !== undefined) {
+                                            //    var subheader = data.label;
+                                            //}
+                                            var description = '';
+                                            if (data.definition !== undefined) {
+                                                description += data.definition;
+                                                if (description.length > 250) {
+                                                    description = description.substring(0, 250 - truncate_ending.length) + truncate_ending;
+                                                }
+                                            }
+
+                                            if (data.path_labels.length > 0) {
+                                                var parents = data.path_labels[0].slice(0, -1);
+                                                description += '\n<ul>\n';
+                                                parents.forEach(function (syn) {
+                                                    description += '<li>' + syn + '</li>\n';
+                                                });
+                                            }
+                                            $('.detail-' + nodeId + ' > .meta').html(category);
+                                            $('.detail-' + nodeId + ' > .description').html(description);
+                                        });
+                                    }(path[i].id, category))
+                                }
+                            }
+                        }
+                        $("#clear-selection").removeClass('hidden');
+                        var srcNode = s.graph.nodes(srcId),
+                            destNode = s.graph.nodes(destId);
+                        if (srcNode) {
+                            srcNode.color = boundaryColor;
+                        }
+                        if (destNode) {
+                            destNode.color = boundaryColor;
+                        }
+                        console.log('query', tableQuery.join('|'));
+                        linkTable.fnFilter(tableQuery.join('|'), null, true, false);
+                        s.refresh({skipIndexation: true});
+                        $('.ui.menu').find('.item').tab('change tab', 'edges');
+
+
+                    }
+
+                    function DrawFirstSelectedNode(srcId) {
+
+                        var tableQuery = [];
+                        design.apply();
+                        var srcNode = s.graph.nodes(srcId);
+
+                        tableQuery.push(srcNode.label);
+                        var description = '';
+                        var subheader = srcNode.category;
+                        var category = srcNode.category;
+                        var label = srcNode.label;
+                        var truncate_ending = '...';
+                        var nodeData = '';
+                        if (category === 'GENE') {
+                            label += ' <a href="https://www.targetvalidation.org/target/' + srcNode.id + '" target="_blank"><i class="external icon black"></i></a>'
+                        } else if (category === 'DISEASE') {
+                            label += ' <a href="https://www.targetvalidation.org/disease/' + srcNode.id + '"target="_blank"><i class="external icon black"></i></a>'
+                        } else if (category === 'DRUG') {
+                            label += ' <a href="https://www.ebi.ac.uk/chembl/compound/inspect/' + srcNode.id + '"target="_blank"><i class="external icon black"></i></a>'
+                        }
+
+                        nodeData += '<div id="selected-target" class="segment raised ">\n' +
+                            '                <div class="ui cards  inverted"><div class="card card-' +
+                            category.toLowerCase() + '">' +
+                            '                <div class="content detail-' + srcNode.id + '">\n' +
+                            '                    <div class="header">' + label + '</div>\n' +
+                            '                    <div class="meta">' + subheader + '</div>\n' +
+                            '                    <div class="description">' + description + '</div>\n' +
+                            '                </div></div>\n' +
+                            '                </div>\n' +
+                            '            </div>';
+                        $("#selected-links-container").append(nodeData);
+
+
+                        if (category === 'GENE') {
+                            (function (nodeId, category) {
+                                $.get("https://api.opentargets.io/v3/platform/private/target/" + nodeId, function (data) {
+                                    if (data.approved_name !== undefined) {
+                                        var subheader = data.approved_name;
+                                    }
+                                    if (data.uniprot_function !== undefined) {
+                                        var description = data.uniprot_function[0];
+                                        if (description.length > 250) {
+                                            description = description.substring(0, 250 - truncate_ending.length) + truncate_ending;
+                                        }
+                                    }
+                                    $('.detail-' + nodeId + ' > .meta').html(category);
+                                    $('.detail-' + nodeId + ' > .description').html(description);
+                                });
+                            }(srcNode.id, srcNode.category));
+                        } else if (category === 'DRUG') {
+                            (function (nodeId) {
+                                $('.detail-' + nodeId + ' > .description').html('<img class="ui image centered bordered medium image-drug" src="https://www.ebi.ac.uk/chembl/compound/displayimage_large/' + nodeId + '">');
+                            }(srcNode.id));
+                        } else if (category === 'DISEASE') {
+                            (function (nodeId, category) {
+                                $.get("https://api.opentargets.io/v3/platform/private/disease/" + nodeId, function (data) {
+                                    //if (data.label !== undefined) {
+                                    //    var subheader = data.label;
+                                    //}
+                                    var description = '';
+                                    if (data.definition !== undefined) {
+                                        description += data.definition;
+                                        if (description.length > 250) {
+                                            description = description.substring(0, 250 - truncate_ending.length) + truncate_ending;
+                                        }
+                                    }
+
+                                    if (data.path_labels.length > 0) {
+                                        var parents = data.path_labels[0].slice(0, -1);
+                                        description += '\n<ul>\n';
+                                        parents.forEach(function (syn) {
+                                            description += '<li>' + syn + '</li>\n';
+                                        });
+                                    }
+                                    $('.detail-' + nodeId + ' > .meta').html(category);
+                                    $('.detail-' + nodeId + ' > .description').html(description);
+                                });
+                            }(srcNode.id, srcNode.category));
+                        }
+
+                        $("#clear-selection").removeClass('hidden');
+
+                        linkTable.fnFilter(tableQuery.join('|'), null, true, false);
+
+
+                    }
+
+                    //RefreshTable(data.table);
+                    if (data.table.length > 0) {
+                        // Then, let's add some data to display:
+
+                        //            s.graph.read(data.graph);
+                        var edge;
+                        var node;
+                        var x;
+                        var y;
+                        var x_spacing;
+                        var y_spacing = 5;
+                        var nodeCounts = {
+                            'GENE': 0,
+                            'CONCEPT': 0,
+                            'DISEASE': 0,
+                            'DRUG': 0,
+                            'PHENOTYPE': 0
+                        };
+                        var nodeCounter = {
+                            'GENE': 0,
+                            'CONCEPT': 0,
+                            'DISEASE': 0,
+                            'DRUG': 0,
+                            'PHENOTYPE': 0
+                        };
+                        data.graph.nodes.forEach(function (node) {
+                            nodeCounts[node.category] += 1;
+                            if (node.category === 'PHENOTYPE') {
+                                nodeCounts['DISEASE'] += 1;
+                            }
+                        });
+                        for (var i = 0; i < data.graph.nodes.length; i++) {
+                            node = s.graph.nodes([data.graph.nodes[i]['id']])[0];
+                            if (node === undefined) {
+
+                                if (data.graph.nodes[i]['category'] === 'GENE') {
+                                    x_spacing = 100 / nodeCounts[data.graph.nodes[i]['category']];
+                                    x = nodeCounter[data.graph.nodes[i]['category']] * x_spacing + x_spacing / 2;
+                                    y = 15;
+                                    if (nodeCounter[data.graph.nodes[i]['category']] % 2 === 0) {
+                                        y += 5;
+                                    }
+
+                                    nodeCounter[data.graph.nodes[i]['category']] += 1;
+                                    $(".gene-list").append(
+                                        "<div class=\"item\">\n" +
+                                        "                            <div class=\"content\">\n" +
+                                        "                                <a class=\"ui label-gene image label\" reference=\"" + data.graph.nodes[i]['id'] + "\">\n" +
+                                        "                                    " + data.graph.nodes[i]['label'] + "\n" +
+                                        "                                    <div class=\"detail\">" + data.graph.nodes[i]['size'] + "</div>\n" +
+                                        "                                </a>\n" +
+                                        "                                <a href=\"view?query=" + data.graph.nodes[i]['id'] + "\"><i class=\"ui grey icon search\"></i></a>\n" +
+                                        "                            </div>\n" +
+                                        "                        </div>")
+                                } else if (data.graph.nodes[i]['category'] === 'DISEASE') {
+                                    x_spacing = 100 / nodeCounts[data.graph.nodes[i]['category']];
+                                    x = nodeCounter[data.graph.nodes[i]['category']] * x_spacing + x_spacing / 2;
+                                    y = 30;
+                                    if (nodeCounter[data.graph.nodes[i]['category']] % 2 === 0) {
+                                        y += 5;
+                                    }
+                                    nodeCounter[data.graph.nodes[i]['category']] += 1;
+
+                                    $(".disease-list").append(
+                                        "<div class=\"item\">\n" +
+                                        "                            <div class=\"content\">\n" +
+                                        "                                <a class=\"ui label-disease image label\" reference=\"" + data.graph.nodes[i]['id'] + "\">\n" +
+                                        "                                    " + data.graph.nodes[i]['label'] + "\n" +
+                                        "                                    <div class=\"detail\">" + data.graph.nodes[i]['size'] + "</div>\n" +
+                                        "                                </a>\n" +
+                                        "                                <a href=\"view?query=" + data.graph.nodes[i]['id'] + "\"><i class=\"ui grey icon search\"></i></a>\n" +
+                                        "                            </div>\n" +
+                                        "                        </div>")
+                                } else if (data.graph.nodes[i]['category'] === 'PHENOTYPE') {
+                                    x_spacing = 100 / nodeCounts['DISEASE'];
+                                    x = nodeCounter['DISEASE'] * x_spacing + x_spacing / 2;
+                                    y = 30;
+                                    if (nodeCounter['DISEASE'] % 2 === 0) {
+                                        y += 5;
+                                    }
+                                    nodeCounter['DISEASE'] += 1;
+
+                                    $(".disease-list").append(
+                                        "<div class=\"item\">\n" +
+                                        "                            <div class=\"content\">\n" +
+                                        "                                <a class=\"ui label-phenotype image label\" reference=\"" + data.graph.nodes[i]['id'] + "\">\n" +
+                                        "                                    " + data.graph.nodes[i]['label'] + "\n" +
+                                        "                                    <div class=\"detail\">" + data.graph.nodes[i]['size'] + "</div>\n" +
+                                        "                                </a>\n" +
+                                        "                                <a href=\"view?query=" + data.graph.nodes[i]['id'] + "\"><i class=\"ui grey icon search\"></i></a>\n" +
+                                        "                            </div>\n" +
+                                        "                        </div>")
+                                } else if (data.graph.nodes[i]['category'] === 'DRUG') {
+                                    x_spacing = 100 / nodeCounts[data.graph.nodes[i]['category']];
+                                    x = nodeCounter[data.graph.nodes[i]['category']] * x_spacing + x_spacing / 2;
+                                    y = 45;
+                                    if (nodeCounter[data.graph.nodes[i]['category']] % 2 === 0) {
+                                        y += 5;
+                                    }
+                                    nodeCounter[data.graph.nodes[i]['category']] += 1;
+
+                                    $(".drug-list").append(
+                                        "<div class=\"item\">\n" +
+                                        "                            <div class=\"content\">\n" +
+                                        "                                <a class=\"ui label-drug image label\" reference=\"" + data.graph.nodes[i]['id'] + "\">\n" +
+                                        "                                    " + data.graph.nodes[i]['label'] + "\n" +
+                                        "                                    <div class=\"detail\">" + data.graph.nodes[i]['size'] + "</div>\n" +
+                                        "                                </a>\n" +
+                                        "                                <a href=\"view?query=" + data.graph.nodes[i]['id'] + "\"><i class=\"ui grey icon search\"></i></a>\n" +
+                                        "                            </div>\n" +
+                                        "                        </div>")
+                                } else if (data.graph.nodes[i]['category'] === 'CONCEPT') {
+                                    x_spacing = 100 / nodeCounts[data.graph.nodes[i]['category']];
+                                    x = nodeCounter[data.graph.nodes[i]['category']] * x_spacing + x_spacing / 2;
+                                    y = 60;
+                                    if (nodeCounter[data.graph.nodes[i]['category']] % 2 === 0) {
+                                        y += 5;
+                                    }
+                                    nodeCounter[data.graph.nodes[i]['category']] += 1;
+
+                                    $(".concept-list").append(
+                                        "<div class=\"item\">\n" +
+                                        "                            <div class=\"content\">\n" +
+                                        "                                <a class=\"ui label-concept image label\" reference=\"" + data.graph.nodes[i]['id'] + "\">\n" +
+                                        "                                    " + data.graph.nodes[i]['label'] + "\n" +
+                                        "                                    <div class=\"detail\">" + data.graph.nodes[i]['size'] + "</div>\n" +
+                                        "                                </a>\n" +
+                                        "                                <a href=\"view?query=" + data.graph.nodes[i]['id'] + "\"><i class=\"ui grey icon search\"></i></a>\n" +
+                                        "                            </div>\n" +
+                                        "                        </div>")
+                                }
+
+                                x += Math.random() * 3 - 1.5;
+                                y += Math.random() * 3 - 1.5;
+                                s.graph.addNode({
+                                    // Main attributes:
+                                    id: data.graph.nodes[i]['id'],
+                                    label: data.graph.nodes[i]['label'],
+                                    // Display attributes:
+                                    x: x,
+                                    triple_x: x,
+                                    y: y,
+                                    triple_y: y,
+                                    size: data.graph.nodes[i]['size'],
+                                    score: data.graph.nodes[i]['size'],
+                                    category: data.graph.nodes[i]['category']
+                                });
+                            }
+                        }
+                        var edge_id;
+                        for (var i = 0; i < data.graph.edges.length; i++) {
+                            edge_id = data.graph.edges[i]['source'] + '-' + data.graph.edges[i]['target'];
+                            //edge_id=[data.graph.edges[i]['id']];
+                            edge = s.graph.edges(edge_id);
+                            if (edge === undefined) {
+                                var size = data.graph.edges[i]['size'];
+                                if (size > 1000) {
+                                    size = 500 + 100 * Math.log(size);
+                                    console.log('corrected size', size)
+                                }
+                                s.graph.addEdge({
+                                    // Main attributes:
+                                    id: edge_id,
+                                    source: data.graph.edges[i]['source'],
+                                    target: data.graph.edges[i]['target'],
+                                    //                // Display attributes:
+                                    docs: data.graph.edges[i]['size'],
+                                    //category: s.graph.nodes(data.graph.edges[i]['source']).category,
+                                    type: 'curve',
+                                    size: size//Math.min(data.graph.edges[i]['size'], 1000)
+                                });
+                            }
+                        }
+
+                        //remove nodes with no edges:
+                        var nodeNeighbors;
+                        s.graph.nodes().forEach(function (node) {
+
+                            nodeNeighbors = s.graph.neighbors(node.id);
+                            if (s.graph.degree(node.id) === 0) {
+                                s.graph.dropNode(node.id);
+                            }
+                        });
+
+                        // key: the name of the object key
+                        // index: the ordinal position of the key within the object
+
+                        // Instanciate the ActiveState plugin:
+                        var activeState = sigma.plugins.activeState(s);
+                        // Initialize the dragNodes plugin:
+                        var dragListener = sigma.plugins.dragNodes(s, s.renderers[0], activeState);
+                        // Initialize the Select plugin:
+                        var select = sigma.plugins.select(s, activeState, s.renderers[0]);
+                        // Initialize the Keyboard plugin:
+                        var keyboard = sigma.plugins.keyboard(s, s.renderers[0]);
+                        // Bind the Keyboard plugin to the Select plugin:
+                        select.bindKeyboard(keyboard);
+                        // Curve parallel edges:
+                        sigma.canvas.edges.autoCurve(s);
+                        //            s.refresh();
+
+                        var graphFilter = sigma.plugins.filter(s);
+
+                        //sigma.plugins.fullScreen({
+                        //    container: 'graph',
+                        //    btnId: 'graph-fullscreen'
+                        //});
+                        // Instanciate the design:
+                        var design = sigma.plugins.design(s, {
+                            styles: myStyles,
+                            palette: myPalette
+                        });
+                        design.apply();
+                        s.refresh();
+                        $('#data-loader').removeClass('active');
+
+
+                        var selectedSource = '';
+                        var selectedTarget = '';
+
+                        function SelectNode(nodeId) {
+                            if (selectedSource == "") {
+                                selectedSource = nodeId;
+                                nodeNeighbors = s.graph.neighbors(nodeId);
+                                var selectedNodes = [];
+                                s.graph.nodes().forEach(function (node) {
+                                    if (node.id in nodeNeighbors || node.id === nodeId) {
+                                        node.level = 5;
+                                        selectedNodes.push(node.id);
+                                    } else {
+                                        node.hidden = true;
+                                    }
+                                });
+                                $('.node-container > .item > .content > .label').each(function () {
+                                    var reference = this.getAttribute('reference');
+                                    if (selectedNodes.indexOf(reference) === -1) {
+                                        $(this).addClass('unselected');
+                                    }
+                                });
+
+                                DrawFirstSelectedNode(selectedSource);
+
+                                s.refresh({skipIndexation: true});
+
+                            } else if (nodeId !== selectedSource) {
+                                $('#selected-links-container').empty();
+                                $(".node-container > .item > .content > [reference='" + nodeId + "']").removeClass('unselected');
+                                selectedTarget = nodeId;
+                                computeAndDrawPath(selectedSource, selectedTarget, '#cb0000', '#990000', '#e2b0b0');
+
+                            }
+
+                        }
+
+
+                        function UnselectNodes() {
+                            selectedSource = "";
+                            selectedTarget = "";
+                            $('#selected-links-container').empty();
+                            $("#clear-selection").addClass('hidden');
+                            $('#link-details').html('<p>Please select a connection between two entities</p>');
+                            $('#link-summary').empty();
+                            $('#link-year-heatmap').empty();
+                            $('.node-container > .item > .content > .unselected').removeClass('unselected');
+                            s.graph.nodes().forEach(function (node) {
+                                node.hidden = false;
+                                node.level = 0;
+                            });
+                            linkTable.fnFilter('', null, true, false);
+                            $('.ui.menu').find('.item').tab('change tab', 'nodes');
+
+                            design.apply();
+                            s.refresh();
+
+                        }
+
+                        $('#clear-selection').click(function () {
+                            UnselectNodes();
+                        });
+
+                        $('.node-container').on('click', ".label", function () {
+                            var reference = this.getAttribute('reference');
+                            if (reference) {
+                                SelectNode(reference);
+                            }
+                        });
+
+                        //s.startNoverlap();
+
+                        // Start the ForceLink algorithm:
+                        var fa = sigma.layouts.startForceLink(s, {
+                            autoStop: true,
+                            adjustSizes: false,
+                            gravity: 1,
+                            linLogMode: true,
+                            strongGravityMode: false,
+                            worker: true,
+                            background: true,
+                            easing: 'cubicInOut',
+                            maxIterations: 10000,
+                            nodeSiblingsScale: 10,
+                            alignNodeSiblings: true
+                        });
+                        // Bind all events:
+                        fa.bind('start stop interpolate', function (event) {
+                            if (event.type === 'stop') {
+                                s.graph.nodes().forEach(function (node) {
+                                    node.force_x = node.x;
+                                    node.force_y = node.y;
+                                });
+                                // s.renderers[0].halo({
+                                //     nodes: s.graph.nodes(),
+                                //     edges: s.graph.edges()
+                                // });
+                            }
+
+                        });
+                        s.bind('animate.start animate.end', function (event) {
+                            console.log('animation' + event.type);
+                        });
+                        //s.refresh();
+                        s.bind('clickNode', function (event) {
+                            SelectNode(event.data.node.id);
+
+                        });
+                        s.bind('clickEdge', function (event) {
+                            var pair = event.data.edge.id.split('-');
+                            $.get("evidence?sbj=" + pair[0] + "&obj=" + pair[1], function (data) {
+                                if (!data.results.isEmpty) {
+                                    UpdateLinkDetail(data, true, pair[0], pair[1]);
+                                }
+                            });
+
+                        });
+
+                        s.bind('clickStage', function (event) {
+                            UnselectNodes();
+                        });
+
+
+                    } else {
+                        $('#data-container').html('<div class="ui negative message inverted">\n' +
+                            '  <div class="header">\n' +
+                            '    No data available for "{{ query }}"' +
+                            '  </div>\n' +
+                            '  <p>Please go back and select an entity from the search bar</p></div>');
+                        $('#data-loader').removeClass('active');
+                    }
+
+
+                });
+                $('#graph-export-image').click(function (element) {
+                    sigma.plugins.image(s, s.renderers[0], {
+                        download: true,
+                        size: 2048,
+                        background: '#1f1f1f',
+                        zoom: true,
+                        clip: true,
+                        labels: true,
+                        filename: 'link_{{ query }}.png'
+                    });
+                });
+                $('#graph-grid-layout').click(function (element) {
+                    sigma.plugins.animate(s, {
+                            x: 'triple_x',
+                            y: 'triple_y'
+                        },
+                        {
+                            duration: 1000,
+                            easing: 'cubicInOut'
+                        });
+                });
+                $('#graph-force-layout').click(function (element) {
+                    sigma.plugins.animate(s, {
+                            x: 'force_x',
+                            y: 'force_y'
+                        },
+                        {
+                            duration: 1000,
+                            easing: 'cubicInOut'
+                        });
+                });
+                $('#graph-zoom-in').click(function (element) {
+                    var cam = s.camera;
+                    sigma.misc.animation.camera(cam, {
+                        ratio: cam.ratio / cam.settings('zoomingRatio')
+                    }, {
+                        duration: 500
+                    });
+                });
+
+                $('#graph-zoom-out').click(function (element) {
+                    var cam = s.camera;
+                    sigma.misc.animation.camera(cam, {
+                        ratio: cam.ratio * cam.settings('zoomingRatio')
+                    }, {
+                        duration: 500
+                    });
+                });
+                $('#graph-zoom-reset').click(function (element) {
+                    var cam = s.camera;
+                    sigma.misc.animation.camera(cam, {
+                            x: 0,
+                            y: 0,
+                            ratio: 1
+                        },
+                        {duration: 500}
+                    );
+                });
+
+
+                $('#selected-links-container').on('click', '.arrow', function () {
+                    var reference = this.getAttribute('reference').split('|');
+                    $.get("evidence?sbj=" + reference[0] + "&obj=" + reference[1], function (data) {
+                        if (!data.results.isEmpty) {
+                            UpdateLinkDetail(data, true, reference[0], reference[1]);
+
+                        }
+                    });
+                });
+
+
+                $('#edge-table tbody').on('click', 'tr', function () {
+                    if ($(this).hasClass('selected')) {
+                        $(this).removeClass('selected');
+                    }
+                    else {
+                        $('#edge-table tr.selected').removeClass('selected');
+                        $(this).addClass('selected');
+                        var source = $(this)[0].childNodes[0].innerHTML.split('view?query=')[1].split('"><i class')[0];
+                        var target = $(this)[0].childNodes[1].innerHTML.split('view?query=')[1].split('"><i class')[0];
+                        $.get("evidence?sbj=" + source + "&obj=" + target, function (data) {
+                            if (!data.results.isEmpty) {
+                                UpdateLinkDetail(data, true, source, target);
+
+                            }
+                        });
+                        //$.get("evidence?sbj=" + target + "&obj=" + source, function (data) {
+                        //    if (!data.results.isEmpty) {
+                        //        UpdateLinkDetail(data, false);
+
+                        //    }
+                        //    $("#link-details").removeClass('loading');
+                        //});
+
+
+                    }
+
+                });
+
+                // $('#button').click(function () {
+                //     table.row('.selected').remove().draw(false);
+                // });
+
+            }
+        });
+    });
+
+
+</script>
+
+<!-- Piwik -->
+<script type="text/javascript">
+    var _paq = _paq || [];
+    _paq.push(["setDomains", ["*.siteUrl.com", "*.siteUrl2.com"]]);
+    _paq.push(['trackPageView']);
+    _paq.push(['enableLinkTracking']);
+    (function () {
+        var u = "//opentargets.piwikpro.com/";
+        _paq.push(['setTrackerUrl', u + 'piwik.php']);
+        _paq.push(['setSiteId', 9]);
+        var d = document, g = d.createElement('script'), s = d.getElementsByTagName('script')[0];
+        g.type = 'text/javascript';
+        g.async = true;
+        g.defer = true;
+        g.src = u + 'piwik.js';
+        s.parentNode.insertBefore(g, s);
+    })();
+</script>
+<noscript><p><img src="//opentargets.piwikpro.com/piwik.php?idsite=9" style="border:0;" alt=""/></p></noscript>
+<!-- End Piwik Code -->
+
+</body>
+</html>
