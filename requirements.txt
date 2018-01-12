@@ -5,11 +5,13 @@ certifi
 flask==0.12.1
 flask_cors
 networkx
-matplotlib
 future
 jmespath
 python-louvain
-google-cloud-bigquery
 addict
 Flask-Env
 rope
+numpy
+requests==2.17.3
+requests_toolbelt
+gunicorn

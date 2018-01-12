@@ -12,7 +12,7 @@ import networkx as nx
 import numpy as np
 import requests
 from addict import Dict
-from elasticsearch import Elasticsearch, helpers
+from elasticsearch import Elasticsearch, helpers, RequestsHttpConnection
 from elasticsearch_xpack import XPackClient
 from flask import Flask, request, jsonify, render_template, url_for
 from flask import Markup
@@ -20,22 +20,35 @@ from flask_cors import CORS
 from flask_env import MetaFlaskEnv
 from networkx.readwrite import json_graph
 from rope.base.codeanalyze import ChangeCollector
-
 from BioStopWords import DOMAIN_STOP_WORDS
 from bio_lexicon import lex as lex_dict
 
 
+# def is_gae():
+#     if 'SERVER_SOFTWARE' in os.environ and (os.environ['SERVER_SOFTWARE'].startswith('Google App Engine/') or
+#                                                 os.environ['SERVER_SOFTWARE'].startswith('Development/')):
+#         from google.appengine.api import urlfetch
+#         urlfetch.set_default_fetch_deadline(60)
+#
+#         return True
+#
+# if is_gae():
+#     import requests_toolbelt.adapters.appengine
+#     # Use the App Engine Requests adapter. This makes sure that Requests uses
+#     # URLFetch.
+#     requests_toolbelt.adapters.appengine.monkeypatch()
+
 class Configuration(object):
     __metaclass__ = MetaFlaskEnv
 
-    ENV_PREFIX = 'PUBMINE_'
+    ENV_PREFIX = 'LIBRARY_'
 
 
 NONWORDCHARS_REGEX = re.compile(r'\W+', flags=re.IGNORECASE | re.UNICODE)
 
 
-ES_MAIN_URL = os.environ["ES_MAIN_URL"]
-ES_GRAPH_URL = os.environ["ES_GRAPH_URL"]
+ES_MAIN_URL = os.environ["ES_MAIN_URL"].split(',')
+ES_GRAPH_URL = os.environ["ES_GRAPH_URL"].split(',')
 
 PUB_INDEX_LAMBDA = 'pubmed-18'
 PUB_DOC_TYPE = 'publication'
@@ -52,13 +65,19 @@ MARKED_DOC_TYPE = 'taggedtext'
 BIOENTITY_INDEX = 'pubmed-18-bioentity'
 BIOENTITY_DOC_TYPE = 'bioentity'
 
-es_graph = Elasticsearch(ES_GRAPH_URL)
+es_graph = Elasticsearch(ES_GRAPH_URL,
+                         # sniff_on_start=True,
+                         # connection_class=RequestsHttpConnection
+                         )
 xpack = XPackClient(es_graph)
 
 xpack.info()
 
 es = Elasticsearch(ES_MAIN_URL,
-                   timeout=300)
+                   timeout=300,
+                   # sniff_on_start=True,
+                   # connection_class=RequestsHttpConnection
+                   )
 
 app = Flask(__name__)
 app.config.from_object(Configuration)
@@ -66,7 +85,8 @@ CORS(app)
 
 gene_names = []
 
-session = requests.session()
+session = requests.Session()
+
 
 FUILTERED_NODES = ['antibody',
               'function',
@@ -349,7 +369,7 @@ def add_header(response):
 
 @app.route('/document/<string:doc_id>', methods=['GET'])
 def document_get(doc_id):
-    document = session.get('/'.join((ES_MAIN_URL, PUB_INDEX, PUB_DOC_TYPE, doc_id)),
+    document = session.get('/'.join((ES_MAIN_URL[0], PUB_INDEX, PUB_DOC_TYPE, doc_id)),
                            ).json()
 
     return jsonify(document)
@@ -374,7 +394,7 @@ def document_mlt(doc_id):
         }
     }
 
-    data = session.post(ES_MAIN_URL + '/' + PUB_INDEX + '/_search/',
+    data = session.post(ES_MAIN_URL[0] + '/' + PUB_INDEX + '/_search/',
                         json=query_body
                         ).json()
 
@@ -587,7 +607,7 @@ def search_get():
     if search_after:
         query_body['search_after'] = search_after
 
-    data = session.post(ES_MAIN_URL + '/' + PUB_INDEX + '/_search/',
+    data = session.post(ES_MAIN_URL[0] + '/' + PUB_INDEX + '/_search/',
                         json=query_body
                         ).json()
     if '_shards' in data:
@@ -709,7 +729,7 @@ def search_get():
 
 @app.route('/graph/explore', methods=['POST'])
 def graph_proxy_post():
-    data = session.post(ES_GRAPH_URL + '/' + PUB_INDEX_LAMBDA + '/_xpack/_graph/_explore', json=request.json).json()
+    data = session.post(ES_GRAPH_URL[0] + '/' + PUB_INDEX_LAMBDA + '/_xpack/_graph/_explore', json=request.json).json()
     if data and 'vertices' in data and data['vertices']:
         data, topics = get_topics_from_graph(data)
         return jsonify(dict(graph=data,
@@ -765,7 +785,7 @@ def topic_graph():
     result_count = 0
     count_query = {"query": {"query_string": {"query": query}},
                    "size": 0}
-    r = session.post(ES_GRAPH_URL + '/' + index_name + '/_search/', json=count_query)
+    r = session.post(ES_GRAPH_URL[0] + '/' + index_name + '/_search/', json=count_query)
     if r.ok:
         result_count = r.json()['hits']['total']
     if result_count > 0:
@@ -807,7 +827,7 @@ def topic_graph():
                                  "timeout": timeout_default},
                     "connections": {"vertices": vertices_query},
                     "vertices": vertices_query}
-        r = session.post(ES_GRAPH_URL + '/' + index_name + '/_xpack/_graph/_explore', json=es_query)
+        r = session.post(ES_GRAPH_URL[0] + '/' + index_name + '/_xpack/_graph/_explore', json=es_query)
         if r.ok:
             data = r.json()
             if data and 'vertices' in data and data['vertices']:
@@ -1046,7 +1066,7 @@ def trends2():
 
     }
 
-    r = session.post(ES_MAIN_URL + '/' + PUB_INDEX + '/_search/',
+    r = session.post(ES_MAIN_URL[0] + '/' + PUB_INDEX + '/_search/',
                      json=query_body
                      )
     data = r.json()
@@ -1798,15 +1818,18 @@ def entity_map():
         jsonG.pop('links')
         edge_table = []
         for edge in jsonG['edges']:
-            row = []
-            target = valid_ids[edge['target']]
-            source = valid_ids[edge['source']]
-            row.append('|'.join((source['label'], edge['source'], source['category'])))
-            row.append('|'.join((target['label'], edge['target'], target['category'])))
-            row.append(edge['size'])
-            row.append(int(round((source[score_model] + target[score_model]) / 2., 0)))
+            try:
+                row = []
+                target = valid_ids[edge['target']]
+                source = valid_ids[edge['source']]
+                row.append('|'.join((source['label'], edge['source'], source['category'])))
+                row.append('|'.join((target['label'], edge['target'], target['category'])))
+                row.append(edge['size'])
+                row.append(int(round((source[score_model] + target[score_model]) / 2., 0)))
 
-            edge_table.append(row)
+                edge_table.append(row)
+            except TypeError as e:
+                app.logger.exception('cannot add edge to graph')
         jsonG['nodes'] = sorted(jsonG['nodes'], reverse=True, key=lambda x: x[score_model])
         for key in jsonG['nodes']:
             key['size'] = key[score_model]
@@ -2106,7 +2129,7 @@ def marked_article_ui():
     pub_id = request.args.get('pub_id')
     marked_title = marked_abstract = '<div></div>'
     if pub_id:
-        entry = session.get(ES_MAIN_URL + '/' + MARKED_INDEX + '/' + MARKED_DOC_TYPE + '/' + pub_id).json()
+        entry = session.get(ES_MAIN_URL[0] + '/' + MARKED_INDEX + '/' + MARKED_DOC_TYPE + '/' + pub_id).json()
         if '_source' in entry:
             marked_title = entry['_source']['title']
             marked_abstract = entry['_source']['abstract']
@@ -2123,7 +2146,7 @@ def marked_article_ui():
 def marked_article(pub_id):
     marked_title = marked_abstract = '<div class="entities"></div>'
     if pub_id:
-        entry = session.get(ES_MAIN_URL + '/' + MARKED_INDEX + '/' + MARKED_DOC_TYPE + '/' + pub_id).json()
+        entry = session.get(ES_MAIN_URL[0] + '/' + MARKED_INDEX + '/' + MARKED_DOC_TYPE + '/' + pub_id).json()
         if '_source' in entry:
             marked_title = entry['_source']['title'] + '</div>'
             marked_abstract = '<div class="entities">' + entry['_source']['abstract']
@@ -2132,6 +2155,15 @@ def marked_article(pub_id):
                         pub_id=pub_id
                         ))
 
+@app.route('/liveness-check',)
+def liveness_check():
+    return jsonify({'status':'live'})
+
+@app.route('/readiness-check',)
+def readiness_check():
+    r = session.get(ES_MAIN_URL[0])
+    r.raise_for_status()
+    return jsonify({'status':'ready'})
 
 if __name__ == '__main__':
     app.run()
