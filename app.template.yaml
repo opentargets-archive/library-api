@@ -1,6 +1,6 @@
 runtime: python
 env: flex
-entrypoint: gunicorn -b 8080 main:app
+entrypoint: gunicorn -b :8080 main:app
 
 runtime_config:
   python_version: 2
@@ -36,6 +36,8 @@ readiness_check:
   failure_threshold: 3
   success_threshold: 1
   app_start_timeout_sec: 60
+
+
 
 # NOTE: Values below are commonly inserted by our CI system..
 env_variables:

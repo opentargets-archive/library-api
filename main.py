@@ -1829,7 +1829,7 @@ def entity_map():
 
                 edge_table.append(row)
             except TypeError as e:
-                app.logger.exception('cannot add edge to graph')
+                app.logger.exception('cannot add edge to graph: '+str(edge))
         jsonG['nodes'] = sorted(jsonG['nodes'], reverse=True, key=lambda x: x[score_model])
         for key in jsonG['nodes']:
             key['size'] = key[score_model]
