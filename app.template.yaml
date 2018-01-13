@@ -8,8 +8,8 @@ runtime_config:
 #service: default
 
 resources:
-  cpu: 1
-  memory_gb: 1
+  cpu: 2
+  memory_gb: 4
   disk_size_gb: 10
 
 automatic_scaling:
