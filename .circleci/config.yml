@@ -107,7 +107,7 @@ jobs:
 
 workflows:
   version: 2
-  build-test-and-deploy:
+  deploy-and-test:
     jobs:
       # This is really confusing: check https://circleci.com/docs/2.0/workflows/#git-tag-job-execution
       # - For a branch push unaffected by any filters, CircleCI runs the job.
@@ -121,7 +121,7 @@ workflows:
       #         only:
       #           - /^prod.*/
       #           - /^staging.*/
-
+      - deploy
       - api-tests:
           requires:
             - deploy
