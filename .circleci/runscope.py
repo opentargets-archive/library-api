@@ -25,7 +25,6 @@ TRIGGER_URL = "https://api.runscope.com/radar/bucket/{}/trigger".format(os.envir
 
 
 PAYLOAD = {
-    'runscope_environment': os.environ['RUNSCOPE_ENV_UUID_EU_DEV'],
     'host': host_url()
         }
 
