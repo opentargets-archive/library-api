@@ -29,8 +29,8 @@ https://<tagname>-dot-open-targets-library.appspot.com
 
 ### To trigger a production deployment:
 ```sh
-TAG=$( echo staging-`date "+%Y%m%d-%H%M"`); git tag $TAG && git push origin $TAG
+TAG=$( echo prod-`date "+%Y%m%d-%H%M"`); git tag $TAG && git push origin $TAG
 ```
 
 ## What about VERSION?
-Deployment does not depend on a change in the VERSION file, but a different version will trigger a new google endpoint deployment and a new `openapi.yaml` specification
+Deployment does not depend on a change in the VERSION file, but a different version will trigger a new google endpoint deployment
