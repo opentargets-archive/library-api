@@ -36,8 +36,7 @@ jobs:
     docker:
       - image: google/cloud-sdk
     environment:
-      #TODO? read ES_URL variable from google metadata using
-      # `gcloud --project ${GOOGLE_PROJECT_ID} compute project-info describe --format json`
+      #ES_GRAPH_URL gets substituted by our CI for production
       GOOGLE_PROJECT_ID: open-targets-library
       ES_MAIN_URL: 'http://be-es-debian-3n-node01:39200,http://be-es-debian-3n-node02:39200,http://be-es-debian-3n-node03:39200'
       ES_GRAPH_URL: 'http://be-es-debian-3n-node01:39200'
