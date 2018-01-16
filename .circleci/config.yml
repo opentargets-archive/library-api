@@ -1,121 +1,42 @@
 version: 2
 jobs:
-  build:
-    working_directory: ~/circulate
-    docker:
-      - image: circleci/python:2.7
-    steps:
-      - checkout
-      - restore_cache:
-          key: deps-a-{{ .Branch }}-{{ checksum "requirements.txt" }}
-      - run:
-          name: Install requirements.txt
-          command: |
-            pip install virtualenv
-            virtualenv venv
-            . venv/bin/activate
-            pip install -r requirements.txt
-      - save_cache:
-          key: deps-a-{{ .Branch }}-{{ checksum "requirements.txt" }}
-          paths:
-            - "venv"
-      - run:
-          name: Run tests that do not depend on ES
-          command: |
-            . venv/bin/activate
-            python -m pytest
+  # tests:
+  #   working_directory: ~/circulate
+  #   docker:
+  #     - image: circleci/python:2.7
+  #   steps:
+  #     - checkout
+  #     - restore_cache:
+  #         key: deps-a-{{ .Branch }}-{{ checksum "requirements.txt" }}
+  #     - run:
+  #         name: Install requirements.txt
+  #         command: |
+  #           pip install virtualenv
+  #           virtualenv venv
+  #           . venv/bin/activate
+  #           pip install -r requirements.txt
+  #     - save_cache:
+  #         key: deps-a-{{ .Branch }}-{{ checksum "requirements.txt" }}
+  #         paths:
+  #           - "venv"
+  #     - run:
+  #         name: Run tests that do not depend on ES
+  #         command: |
+  #           . venv/bin/activate
+  #           python -m pytest
       # - store_artifacts:
           # path: test-reports/
           # destination: tr1
       # - store_test_results:
           # path: test-reports/
 
-  push-containers:
-    docker:
-      - image: circleci/python:2.7
-    environment:
-      QUAY_REPO: quay.io/opentargets/rest_api
-      GCR_REPO: eu.gcr.io/open-targets-eu-dev/rest_api
-    working_directory: ~/circulate
-    steps:
-      - checkout
-      - run:
-          name: install envsubst and prepare swagger doc
-          command: |
-            sudo apt-get install -y gettext-base
-            set -o allexport
-            echo -e "### Reading API_VERSION from VERSION file ..."
-            source VERSION
-            echo -e "### sed hacking to clean up the template ..."
-            sed 's/host: .*/host: \"api.opentargets.io\"/' openapi.template.yaml | sed '/.*x-google.*/,+3d' | envsubst > app/static/docs/swagger/swagger.yaml
-
-      - setup_remote_docker
-      - run:
-          name: Build Docker image
-          command: |
-            docker build -t circle-${CIRCLE_SHA1} -f docker/Dockerfile .
-      - run:
-          name: Push to Google Container Registry (gcr.io)
-          command: |
-            echo ${GOOGLE_AUTH} | base64 -i --decode > ${HOME}/gcp-key.json
-            docker login -u _json_key -p "$(cat ${HOME}/gcp-key.json)" https://eu.gcr.io
-            if [ -n "${CIRCLE_TAG:+1}" ]; then
-              ## tag tag :) and push
-              echo -e "building for tag ${CIRCLE_TAG}"
-              docker tag circle-${CIRCLE_SHA1} "${GCR_REPO}:${CIRCLE_TAG}"
-              docker push "${GCR_REPO}:${CIRCLE_TAG}"
-              docker tag ${GCR_REPO}:${CIRCLE_TAG} ${GCR_REPO}:circle-${CIRCLE_SHA1}
-            elif [ -n "${CIRCLE_BRANCH:+1}" ]; then
-              ## branch tag and push
-              echo -e "building for branch"
-              docker tag circle-${CIRCLE_SHA1} ${GCR_REPO}:${CIRCLE_BRANCH}
-              docker push ${GCR_REPO}:${CIRCLE_BRANCH}
-              docker tag ${GCR_REPO}:${CIRCLE_BRANCH} ${GCR_REPO}:circle-${CIRCLE_SHA1}
-            else
-              echo -e "### No CIRCLE_TAG or CIRCLE_BRANCH defined"
-              exit 1
-            fi
-            ## sha commit push
-            docker push ${GCR_REPO}:circle-${CIRCLE_SHA1}
-            ## push latest if master
-            if [ "$CIRCLE_BRANCH" = "master" ]
-              then
-                docker tag ${GCR_REPO}:${CIRCLE_BRANCH} ${GCR_REPO}:latest
-                docker push ${GCR_REPO}:latest
-            fi
-      - run:
-          name: Push to Quay
-          command: |
-            docker login -u="opentargets+quaybot" -p="${QUAYBOT_PASSWORD}" quay.io
-            if [ -n "${CIRCLE_TAG:+1}" ]; then
-              ## tag tag :) and push
-              docker tag circle-${CIRCLE_SHA1} ${QUAY_REPO}:${CIRCLE_TAG}
-              docker push ${GCR_REPO}:${CIRCLE_TAG}
-              docker tag ${QUAY_REPO}:${CIRCLE_TAG} ${QUAY_REPO}:circle-${CIRCLE_SHA1}
-            elif [ -n "${CIRCLE_BRANCH:+1}" ]; then
-              ## branch tag and push
-              docker tag circle-${CIRCLE_SHA1} ${QUAY_REPO}:${CIRCLE_BRANCH}
-              docker push ${GCR_REPO}:${CIRCLE_BRANCH}
-              docker tag ${QUAY_REPO}:${CIRCLE_BRANCH} ${QUAY_REPO}:circle-${CIRCLE_SHA1}
-            else
-              echo -e "### No CIRCLE_TAG or CIRCLE_BRANCH defined"
-              exit 1
-            fi
-            ## sha commit push
-            docker push ${QUAY_REPO}:circle-${CIRCLE_SHA1}
-            ## push latest if master
-            if [ "$CIRCLE_BRANCH" = "master" ]
-              then
-                docker tag ${QUAY_REPO}:${CIRCLE_BRANCH} ${QUAY_REPO}:latest
-                docker push ${QUAY_REPO}:latest
-            fi
+  
   deploy:
     working_directory: ~/circulate
     docker:
       - image: google/cloud-sdk
     environment:
-      #TODO? read ES_URL variable from google metadata using
-      # `gcloud --project ${GOOGLE_PROJECT_ID} compute project-info describe --format json`
+      #ES_GRAPH_URL gets substituted by our CI for production
       GOOGLE_PROJECT_ID: open-targets-library
       ES_MAIN_URL: 'http://be-es-debian-3n-node01:39200,http://be-es-debian-3n-node02:39200,http://be-es-debian-3n-node03:39200'
       ES_GRAPH_URL: 'http://be-es-debian-3n-node01:39200'
@@ -134,6 +55,13 @@ jobs:
             gcloud auth activate-service-account --key-file ${HOME}/gcp-key.json
 
       - run:
+          name: Make an app.yaml
+          command: |
+            #make it available
+            echo -e "\n\n### Substituting the config id [ ${GCENDPOINT_VERSION} ] in the appEngine yaml \n\n"
+            envsubst < app.template.yaml > app.yaml
+
+      - run:
           name: Deploy branch to google AppEngine
           command: |
             gcloud app deploy --no-promote --version $CIRCLE_BRANCH --project ${GOOGLE_PROJECT_ID}
@@ -146,16 +74,19 @@ jobs:
 
   api-tests:
     docker:
-      - image: circleci/python:2.7
+      - image: python:2.7
     environment:
       GOOGLE_PROJECT_ID: open-targets-library
-    working_directory: ~/circulate
     steps:
       - checkout
       - run:
-          name: Run runscope tests
+          name: Install requests library
+          command: pip install requests
+      - run:
+          name: Trigger runscope tests on deployed branch
           command: |
-            source .circleci/runscope/run.sh
+            set -o allexport
+            python .circleci/runscope.py
 
   stop-instance:
     working_directory: ~/circulate
@@ -182,7 +113,7 @@ jobs:
 
 workflows:
   version: 2
-  build-test-and-deploy:
+  deploy-and-test:
     jobs:
       # This is really confusing: check https://circleci.com/docs/2.0/workflows/#git-tag-job-execution
       # - For a branch push unaffected by any filters, CircleCI runs the job.
@@ -190,16 +121,13 @@ workflows:
       # - a job must have a filters tags section to run as a part of a tag push
       # - all its transitively dependent jobs must also have a filters tags
       # Also see https://discuss.circleci.com/t/build-required-steps-automatically-for-tag-filtered-workflows/15185
-      - build:
-          filters:
-            tags:
-              only:
-                - /^prod.*/
-                - /^staging.*/
-
-      - deploy:
-          requires:
-            - push-containers
+      # - tests:
+      #     filters:
+      #       tags:
+      #         only:
+      #           - /^prod.*/
+      #           - /^staging.*/
+      - deploy
       - api-tests:
           requires:
             - deploy
