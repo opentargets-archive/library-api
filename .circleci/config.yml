@@ -56,6 +56,13 @@ jobs:
             gcloud auth activate-service-account --key-file ${HOME}/gcp-key.json
 
       - run:
+          name: Make an app.yaml
+          command: |
+            #make it available
+            echo -e "\n\n### Substituting the config id [ ${GCENDPOINT_VERSION} ] in the appEngine yaml \n\n"
+            envsubst < app.template.yaml > app.yaml
+
+      - run:
           name: Deploy branch to google AppEngine
           command: |
             gcloud app deploy --no-promote --version $CIRCLE_BRANCH --project ${GOOGLE_PROJECT_ID}
