@@ -13,7 +13,7 @@ import numpy as np
 import requests
 from addict import Dict
 from elasticsearch import Elasticsearch, helpers, RequestsHttpConnection
-from elasticsearch_xpack import XPackClient
+# from elasticsearch_xpack import XPackClient
 from flask import Flask, request, jsonify, render_template, url_for
 from flask import Markup
 from flask_cors import CORS
@@ -69,9 +69,9 @@ es_graph = Elasticsearch(ES_GRAPH_URL,
                          # sniff_on_start=True,
                          # connection_class=RequestsHttpConnection
                          )
-xpack = XPackClient(es_graph)
-
-xpack.info()
+# xpack = XPackClient(es_graph)
+#
+# xpack.info()
 
 es = Elasticsearch(ES_MAIN_URL,
                    timeout=300,
@@ -2167,9 +2167,12 @@ def liveness_check():
 
 @app.route('/readiness-check',)
 def readiness_check():
-    r = session.get(ES_MAIN_URL[0], timeout=5)
+    r = session.get(ES_MAIN_URL[0]+'/_cluster/health', timeout=5)
     r.raise_for_status()
-    return jsonify({'status':'ready'})
+    status = r.json()['status']
+    if status=='red':
+        raise Exception('Elasticsearch status is red')
+    return jsonify({'status':status})
 
 if __name__ == '__main__':
     app.run()
