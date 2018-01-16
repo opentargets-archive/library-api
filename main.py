@@ -148,7 +148,8 @@ FUILTERED_NODES = ['antibody',
               'Refractory',
               'Progressive',
               'target',
-              'Spastic paraplegia - epilepsy - intellectual disability'
+              'Spastic paraplegia - epilepsy - intellectual disability',
+              'Sex'
                    ]
 FUILTERED_NODES.extend(DOMAIN_STOP_WORDS)
 
@@ -1318,7 +1319,7 @@ def get_base_entity_query(query,
             "query": query,
             "fields": ["concept.subject_tags.*",
                        "concept.object_tags.*",
-                       # "concept.sentence.text",# this will trigger a big number of hits
+                       "concept.sentence.text",# this will trigger a big number of hits
                        'pub_id',
                        "abbreviations.*"
                        ],
@@ -1749,6 +1750,10 @@ def entity_map():
                             valid_ids[bucket['key']]['score'] = (valid_ids[bucket['key']]['score'] + bucket[
                                 'score']) / 2.
         clean_valid_ids(valid_ids, valid_ids_lables)
+
+
+
+
 
         '''query to get all the edges linking significant nodes'''
 
