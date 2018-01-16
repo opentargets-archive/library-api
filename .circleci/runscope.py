@@ -31,7 +31,7 @@ PAYLOAD = {
 
 def main():
 
-    print 'Attempting to connect to API deployed at {}{}'.format(host_url())
+    print 'Attempting to connect to API deployed at {}'.format(host_url())
 
     attempts=1
     while ping().status_code != 200:
