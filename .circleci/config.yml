@@ -60,6 +60,7 @@ jobs:
             #make it available
             echo -e "\n\n### Substituting the ES_URL into the app.yaml \n\n"
             envsubst < app.template.yaml > app.yaml
+            cat app.yaml
 
       - run:
           name: Deploy branch to google AppEngine
