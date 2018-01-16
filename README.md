@@ -31,3 +31,8 @@ make sure the following command is run in your elasticsearch to increase the sie
 ```
 curl -XPUT 'http://elasticsearch_url:9200/pubmed-18-concept/_settings' -H 'Content-Type: application/json' -d'{"index" : {"max_adjacency_matrix_filters":500}}'
 ```
+
+## Deploy
+To deploy on AppEngine, just create a github release with a tag that starts with `prod-*`
+
+All branches (including master) are deployed, tested with runscope **but then** are spun down to save cost.
