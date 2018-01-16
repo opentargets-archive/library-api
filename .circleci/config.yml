@@ -63,6 +63,7 @@ jobs:
 
       - run:
           name: Deploy branch to google AppEngine
+          no_output_timeout: 30m
           command: |
             gcloud app deploy --no-promote --version $CIRCLE_BRANCH --project ${GOOGLE_PROJECT_ID}
 
