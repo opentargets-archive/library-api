@@ -131,6 +131,7 @@ FUILTERED_NODES = ['antibody',
                    'Frequent',
                    'Episodic',
                    'Acute',
+                   'Peripheral',
               'Chronic',
               'Heterogeneous',
               'Prolonged',
@@ -2166,7 +2167,7 @@ def liveness_check():
 
 @app.route('/readiness-check',)
 def readiness_check():
-    r = session.get(ES_MAIN_URL[0])
+    r = session.get(ES_MAIN_URL[0], timeout=5)
     r.raise_for_status()
     return jsonify({'status':'ready'})
 
