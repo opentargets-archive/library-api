@@ -58,14 +58,24 @@ jobs:
           name: Make an app.yaml
           command: |
             #make it available
-            echo -e "\n\n### Substituting the config id [ ${GCENDPOINT_VERSION} ] in the appEngine yaml \n\n"
+            echo -e "\n\n### Substituting the ES_URL into the app.yaml \n\n"
             envsubst < app.template.yaml > app.yaml
 
       - run:
           name: Deploy branch to google AppEngine
           no_output_timeout: 30m
           command: |
-            gcloud app deploy --no-promote --version $CIRCLE_BRANCH --project ${GOOGLE_PROJECT_ID}
+            if [ -n "${CIRCLE_TAG:+1}" ]; then
+              echo -e "deploying tag ${CIRCLE_TAG}"
+              gcloud app deploy --version $CIRCLE_TAG --project ${GOOGLE_PROJECT_ID}
+            elif [ -n "${CIRCLE_BRANCH:+1}" ]; then
+              ## branch tag and push
+              echo -e "deploying branch ${CIRCLE_BRANCH} for testing"
+              gcloud app deploy --no-promote --version $CIRCLE_BRANCH --project ${GOOGLE_PROJECT_ID}
+            else
+              echo -e "### No CIRCLE_TAG or CIRCLE_BRANCH defined"
+              exit 1
+            fi
 
 
 
@@ -118,20 +128,20 @@ workflows:
       # - a job must have a filters tags section to run as a part of a tag push
       # - all its transitively dependent jobs must also have a filters tags
       # Also see https://discuss.circleci.com/t/build-required-steps-automatically-for-tag-filtered-workflows/15185
-      # - tests:
-      #     filters:
-      #       tags:
-      #         only:
-      #           - /^prod.*/
-      #           - /^staging.*/
-      - deploy
+
+      - deploy:
+          filters:
+            tags:
+              only: /^prod.*/
       - api-tests:
           requires:
             - deploy
+          filters:
+            tags:
+              only: /^prod.*/
       - stop-instance:
           requires:
             - api-tests
           filters:
             branches:
               ignore: master
-
