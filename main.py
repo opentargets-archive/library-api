@@ -6,13 +6,14 @@ from collections import Counter, deque, defaultdict
 from copy import deepcopy
 from datetime import datetime
 from difflib import SequenceMatcher
+
 import community
 import jmespath
 import networkx as nx
 import numpy as np
 import requests
 from addict import Dict
-from elasticsearch import Elasticsearch, helpers, RequestsHttpConnection
+from elasticsearch import Elasticsearch, helpers
 # from elasticsearch_xpack import XPackClient
 from flask import Flask, request, jsonify, render_template, url_for
 from flask import Markup
@@ -20,6 +21,7 @@ from flask_cors import CORS
 from flask_env import MetaFlaskEnv
 from networkx.readwrite import json_graph
 from rope.base.codeanalyze import ChangeCollector
+
 from BioStopWords import DOMAIN_STOP_WORDS
 from bio_lexicon import lex as lex_dict
 
@@ -45,7 +47,6 @@ class Configuration(object):
 
 
 NONWORDCHARS_REGEX = re.compile(r'\W+', flags=re.IGNORECASE | re.UNICODE)
-
 
 ES_MAIN_URL = os.environ["ES_MAIN_URL"].split(',')
 ES_GRAPH_URL = os.environ["ES_GRAPH_URL"].split(',')
@@ -87,79 +88,79 @@ gene_names = []
 
 session = requests.Session()
 
-
-FUILTERED_NODES = ['antibody',
-              'function',
-              'phenotype',
-              'Mice',
-              'CROMOLYN SODIUM',
-              'sign or symptom',
-              'AMINO ACIDS',
-              'GLYCINE',
-              'SODIUM CHLORIDE',
-              'WATER',
-              'RASAGILINE',
-              'FELBINAC',
-              'TCHP',
-              'Moderate',
-              'Sporadic',
-              'Positive',
-              'Negative',
-              'Chronic',
-              'Position',
-                   'Borderline',
-                   'Profound',
-                   'Laterality',
-                   'Bilateral',
-                   'Unilateral',
-                   'Right',
-                   'Right-sided',
-                   'Left',
-                   'Left-sided',
-                   'Generalized',
-                   'Generalised',
-                   'Localized',
-                   'Localised',
-                   'Distal',
-                   'Outermost',
-                   'Proximal',
-                   'Severity',
-                   'Intensity',
-                   'Mild',
-                   'Severe',
-                   'Frequency',
-                   'Frequent',
-                   'Episodic',
-                   'Acute',
-                   'Peripheral',
-              'Chronic',
-              'Heterogeneous',
-              'Prolonged',
-              'disease',
-              'cancer',
-              'cancers',
-              'neoplasm',
-              'neoplasms',
-              'tumor',
-              'tumors',
-              'tumour',
-              'tumours',
-              'Central',
-              'Onset',
-              'Refractory',
-              'Progressive',
-              'target',
-              'Spastic paraplegia - epilepsy - intellectual disability',
-              'Sex',
-                   'review'
-                   ]
-FUILTERED_NODES.extend(DOMAIN_STOP_WORDS)
+FILTERED_NODES = ['antibody',
+                   'function',
+                   'phenotype',
+                   'Mice',
+                   'CROMOLYN SODIUM',
+                   'sign or symptom',
+                   'AMINO ACIDS',
+                   'GLYCINE',
+                   'SODIUM CHLORIDE',
+                   'WATER',
+                   'RASAGILINE',
+                   'FELBINAC',
+                   'TCHP',
+                   'Moderate',
+                   'Sporadic',
+                   'Positive',
+                  'Negative',
+                  'Chronic',
+                  'Position',
+                  'Borderline',
+                  'Profound',
+                  'Laterality',
+                  'Bilateral',
+                  'Unilateral',
+                  'Right',
+                  'Right-sided',
+                  'Left',
+                  'Left-sided',
+                  'Generalized',
+                  'Generalised',
+                  'Localized',
+                  'Localised',
+                  'Distal',
+                  'Outermost',
+                  'Proximal',
+                  'Severity',
+                  'Intensity',
+                  'Mild',
+                  'Severe',
+                  'Frequency',
+                  'Frequent',
+                  'Episodic',
+                  'Acute',
+                  'Peripheral',
+                  'Chronic',
+                  'Heterogeneous',
+                  'Prolonged',
+                  'disease',
+                  'cancer',
+                   'cancers',
+                   'neoplasm',
+                   'neoplasms',
+                   'tumor',
+                   'tumors',
+                   'tumour',
+                   'tumours',
+                   'Central',
+                   'Onset',
+                   'Refractory',
+                   'Progressive',
+                   'target',
+                   'Spastic paraplegia - epilepsy - intellectual disability',
+                   'Sex',
+                   'review',
+                  'Transient',
+                  'findings'
+                  ]
+FILTERED_NODES.extend(DOMAIN_STOP_WORDS)
 
 
 def _ratio(str1, str2):
     s = SequenceMatcher(None, str1, str2)
     return s.quick_ratio()
-
 
 
 # =============== PORTED FROM TEXTACY ======================
@@ -319,6 +320,8 @@ def _process(s):
     if not s:
         return ''
     return NONWORDCHARS_REGEX.sub(' ', s).lower().strip()
+
+
 # =============== END  TEXTACY ======================
 
 
@@ -359,7 +362,6 @@ def agf_opt_merge(lists):
     return sets
 
 
-
 # =============== FLASK METHODS ======================
 
 
@@ -367,7 +369,6 @@ def agf_opt_merge(lists):
 def add_header(response):
     response.cache_control.max_age = 300
     return response
-
 
 
 @app.route('/document/<string:doc_id>', methods=['GET'])
@@ -924,9 +925,6 @@ def get_topics_from_graph(data, verbose=False, min_topic_size=1):
     return data, topics
 
 
-
-
-
 def unit_vector(vector):
     """ Returns the unit vector of the vector.  """
     return vector / np.linalg.norm(vector)
@@ -1236,8 +1234,6 @@ def trends2():
     return jsonify(data)
 
 
-
-
 def digest_buckets_data(buckets,
                         reference_query,
                         label_query):
@@ -1287,7 +1283,6 @@ def get_entities_in_concept(conc, valid_ids):
     return return_dict
 
 
-
 def digest_matrix_key(key):
     second = None
     splitted_key = key.split('&')
@@ -1321,7 +1316,7 @@ def get_base_entity_query(query,
             "query": query,
             "fields": ["concept.subject_tags.*",
                        "concept.object_tags.*",
-                       "concept.sentence.text",# this will trigger a big number of hits
+                       "concept.sentence.text",  # this will trigger a big number of hits
                        'pub_id',
                        "abbreviations.*"
                        ],
@@ -1377,7 +1372,7 @@ def get_sbj_obj_agg(query,
                         "field": "concept.%s.%s.reference" % (semtype2tagindex[sem_type], entity_type),
                         "size": int(elements_count * count_weights[entity_type]),
                         "min_doc_count": min_doc_count,
-                        "exclude": FUILTERED_NODES
+                        "exclude": FILTERED_NODES
                     },
                     "aggs": {
 
@@ -1414,7 +1409,7 @@ def get_sbj_obj_agg(query,
                         "field": "concept.%s.%s.reference" % (semtype2tagindex[sem_type], entity_type),
                         "size": int(elements_count * count_weights[entity_type]),
                         "min_doc_count": min_doc_count,
-                        "exclude": FUILTERED_NODES,
+                        "exclude": FILTERED_NODES,
                         "chi_square": {"include_negatives": False}
                         # "gnd": {}
 
@@ -1594,7 +1589,7 @@ def entity_map():
         elif ',' in entity_types:
             entity_types = entity_types.split(',')
         else:
-            entity_types=[entity_types]
+            entity_types = [entity_types]
         if entity_types[0] not in default_entity_types:
             entity_types = default_entity_types
     else:
@@ -1604,6 +1599,7 @@ def entity_map():
     elments_count = int(request.args.get('elements', 5)) or 5
     min_doc_count = request.args.get('min_doc_count') or 0
     sampler_size = int(request.args.get('sample', 0)) or 0
+    hops = int(request.args.get('hops', 1)) or 1
 
     allowed_modes = ['specificity', 'popularity']
     mode = request.args.get('mode', 'specificity') or 'specificity'
@@ -1674,8 +1670,8 @@ def entity_map():
                 agg_category = 'CONCEPT'
 
             for bucket in agg['buckets']:
-                if bucket['key'] not in valid_ids and bucket['label'] not in FUILTERED_NODES and bucket[
-                    'label'].lower() not in FUILTERED_NODES:
+                if bucket['key'] not in valid_ids and bucket['label'] not in FILTERED_NODES and bucket[
+                    'label'].lower() not in FILTERED_NODES:
                     if not (agg_category == 'CONCEPT' and bucket['label'].lower() in valid_ids_lables):
 
                         score = 1
@@ -1688,77 +1684,74 @@ def entity_map():
                             valid_ids_lables.add(bucket['label'].lower())
                             valid_ids_lables.add(bucket['label'].lower().replace('-', ''))
 
-                elif 'score' in bucket and bucket['key'] in valid_ids and bucket['label'] not in FUILTERED_NODES and bucket[
-                    'label'].lower() not in FUILTERED_NODES:
+                elif 'score' in bucket and bucket['key'] in valid_ids and bucket['label'] not in FILTERED_NODES and \
+                                bucket[
+                                    'label'].lower() not in FILTERED_NODES:
                     valid_ids[bucket['key']]['score'] = (valid_ids[bucket['key']]['score'] + bucket['score']) / 2.
 
     clean_valid_ids(valid_ids, valid_ids_lables)
 
     if valid_ids:
-        min_should_match = len(query.split(' '))
-        if len(valid_ids) <10:
-            min_should_match = 1 #expand more if few entities found
-        '''expand with additional significant_terms'''
-        elments_count += int(elments_count * .5)
-        query = ' '.join(valid_ids.keys())
-        data = es.search(index=index_name,
-                         body=get_sbj_obj_agg(query,
-                                              elements_count=elments_count,
-                                              sampler_size=sampler_size,
-                                              minimum_should_match=min_should_match,
-                                              mode=mode,
-                                              min_doc_count=min_doc_count,
-                                              entities=entity_types
-                                              ),
-                         timeout='5m')
-        if sampler_size:
-            agg_data = data['aggregations']['sample']
-        else:
-            agg_data = data['aggregations']
+        min_should_match = 2
+        for i in range(hops):
+            '''do a round of expansion with additional significant_terms per specified additioanl hops'''
+            elments_count += int(elments_count * .5)
+            query = ' '.join(valid_ids.keys())
+            data = es.search(index=index_name,
+                             body=get_sbj_obj_agg(query,
+                                                  elements_count=elments_count,
+                                                  sampler_size=sampler_size,
+                                                  minimum_should_match=min_should_match,
+                                                  mode=mode,
+                                                  min_doc_count=min_doc_count,
+                                                  entities=entity_types
+                                                  ),
+                             timeout='5m')
+            if sampler_size:
+                agg_data = data['aggregations']['sample']
+            else:
+                agg_data = data['aggregations']
 
-        for agg_name, agg in agg_data.items():
-            if isinstance(agg, dict):
-                digest_buckets_data(agg['buckets'],
-                                    reference_query='_source.concept.*.*[][][].reference',
-                                    label_query='_source.concept.*.*[][][].label')
+            for agg_name, agg in agg_data.items():
+                if isinstance(agg, dict):
+                    digest_buckets_data(agg['buckets'],
+                                        reference_query='_source.concept.*.*[][][].reference',
+                                        label_query='_source.concept.*.*[][][].label')
 
-        for agg_name, agg in agg_data.items():
-            if isinstance(agg, dict):
+            for agg_name, agg in agg_data.items():
+                if isinstance(agg, dict):
 
-                agg_category = ''
-                if 'disease' in agg_name:
-                    agg_category = 'DISEASE'
-                elif 'phenotype' in agg_name:
-                    agg_category = 'PHENOTYPE'
-                elif 'drug' in agg_name:
-                    agg_category = 'DRUG'
-                elif 'gene' in agg_name:
-                    agg_category = 'GENE'
-                elif 'concept' in agg_name:
-                    agg_category = 'CONCEPT'
-                if agg_category not in ['CONCEPT']:
-                    for bucket in agg['buckets']:
-                        if bucket['key'] not in valid_ids and bucket['label'] not in FUILTERED_NODES and bucket[
-                            'label'].lower() not in FUILTERED_NODES:
-                            score = 1
-                            if 'score' in bucket:
-                                score = bucket['score']
-                            valid_ids[bucket['key']] = dict(label=bucket['label'],
-                                                            category=agg_category,
-                                                            score=score)
-                            if agg_category != 'CONCEPT':
-                                valid_ids_lables.add(bucket['label'].lower())
-                                valid_ids_lables.add(bucket['label'].lower().replace('-', ''))
-                        elif 'score' in bucket and bucket['key'] in valid_ids and bucket['label'] not in FUILTERED_NODES \
-                                and \
-                                        bucket['label'].lower() not in FUILTERED_NODES:
-                            valid_ids[bucket['key']]['score'] = (valid_ids[bucket['key']]['score'] + bucket[
-                                'score']) / 2.
+                    agg_category = ''
+                    if 'disease' in agg_name:
+                        agg_category = 'DISEASE'
+                    elif 'phenotype' in agg_name:
+                        agg_category = 'PHENOTYPE'
+                    elif 'drug' in agg_name:
+                        agg_category = 'DRUG'
+                    elif 'gene' in agg_name:
+                        agg_category = 'GENE'
+                    elif 'concept' in agg_name:
+                        agg_category = 'CONCEPT'
+                    if agg_category not in ['CONCEPT']:
+                        for bucket in agg['buckets']:
+                            if bucket['key'] not in valid_ids and bucket['label'] not in FILTERED_NODES and bucket[
+                                'label'].lower() not in FILTERED_NODES:
+                                score = 1
+                                if 'score' in bucket:
+                                    score = bucket['score']
+                                valid_ids[bucket['key']] = dict(label=bucket['label'],
+                                                                category=agg_category,
+                                                                score=score)
+                                if agg_category != 'CONCEPT':
+                                    valid_ids_lables.add(bucket['label'].lower())
+                                    valid_ids_lables.add(bucket['label'].lower().replace('-', ''))
+                            elif 'score' in bucket and bucket['key'] in valid_ids and bucket['label'] not in \
+                                    FILTERED_NODES \
+                                    and \
+                                            bucket['label'].lower() not in FILTERED_NODES:
+                                valid_ids[bucket['key']]['score'] = (valid_ids[bucket['key']]['score'] + bucket[
+                                    'score']) / 2.
         clean_valid_ids(valid_ids, valid_ids_lables)
-
-
-
-
 
         '''query to get all the edges linking significant nodes'''
 
@@ -1806,7 +1799,7 @@ def entity_map():
             weight = int(round(1000. * pagerank[node], 0) + 1)
             node_data['pagerank'] = weight
             valid_ids[node]['pagerank'] = weight
-            sig_weight = int(round(node_data['significance'] * 100, 0) + 1)
+            sig_weight = int(round(node_data['significance'], 0) + 1)
             node_data['significance'] = sig_weight
             valid_ids[node]['significance'] = sig_weight
 
@@ -1839,7 +1832,7 @@ def entity_map():
 
                 edge_table.append(row)
             except TypeError as e:
-                app.logger.exception('cannot add edge to graph: '+str(edge))
+                app.logger.exception('cannot add edge to graph: ' + str(edge))
         jsonG['nodes'] = sorted(jsonG['nodes'], reverse=True, key=lambda x: x[score_model])
         for key in jsonG['nodes']:
             key['size'] = key[score_model]
@@ -2098,7 +2091,6 @@ def get_entity_evidence():
                         histogram=histogram))
 
 
-
 @app.route('/stats', methods=['GET'])
 def stats():
     return jsonify(dict(documents=es.search(index=PUB_INDEX,
@@ -2165,18 +2157,21 @@ def marked_article(pub_id):
                         pub_id=pub_id
                         ))
 
-@app.route('/liveness-check',)
-def liveness_check():
-    return jsonify({'status':'live'})
 
-@app.route('/readiness-check',)
+@app.route('/liveness-check', )
+def liveness_check():
+    return jsonify({'status': 'live'})
+
+
+@app.route('/readiness-check', )
 def readiness_check():
-    r = session.get(ES_MAIN_URL[0]+'/_cluster/health', timeout=5)
+    r = session.get(ES_MAIN_URL[0] + '/_cluster/health', timeout=5)
     r.raise_for_status()
     status = r.json()['status']
-    if status=='red':
+    if status == 'red':
         raise Exception('Elasticsearch status is red')
-    return jsonify({'status':status})
+    return jsonify({'status': status})
+
 
 if __name__ == '__main__':
     app.run()
