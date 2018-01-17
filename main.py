@@ -150,7 +150,8 @@ FUILTERED_NODES = ['antibody',
               'Progressive',
               'target',
               'Spastic paraplegia - epilepsy - intellectual disability',
-              'Sex'
+              'Sex',
+                   'review'
                    ]
 FUILTERED_NODES.extend(DOMAIN_STOP_WORDS)
 
@@ -1694,6 +1695,9 @@ def entity_map():
     clean_valid_ids(valid_ids, valid_ids_lables)
 
     if valid_ids:
+        min_should_match = len(query.split(' '))
+        if len(valid_ids) <10:
+            min_should_match = 1 #expand more if few entities found
         '''expand with additional significant_terms'''
         elments_count += int(elments_count * .5)
         query = ' '.join(valid_ids.keys())
@@ -1701,7 +1705,7 @@ def entity_map():
                          body=get_sbj_obj_agg(query,
                                               elements_count=elments_count,
                                               sampler_size=sampler_size,
-                                              minimum_should_match=len(query.split(' ')),
+                                              minimum_should_match=min_should_match,
                                               mode=mode,
                                               min_doc_count=min_doc_count,
                                               entities=entity_types
