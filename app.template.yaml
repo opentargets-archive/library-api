@@ -44,3 +44,13 @@ env_variables:
     ES_MAIN_URL: ${ES_MAIN_URL}
     ES_GRAPH_URL: ${ES_GRAPH_URL}
 
+handlers:
+# - url: /favicon\.ico
+#   static_files: favicon.ico
+#   upload: favicon\.ico
+
+- url: /static
+  static_dir: static
+
+# - url: /.*
+#   script: guestbook.app
