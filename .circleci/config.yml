@@ -62,7 +62,7 @@ jobs:
             cat app.yaml
 
       - run:
-          name: Deploy branch to google AppEngine
+          name: Deploy branch to google AppEngine (promote if it is a Tag deploy)
           no_output_timeout: 30m
           command: |
             if [ -n "${CIRCLE_TAG:+1}" ]; then
@@ -110,7 +110,7 @@ jobs:
           command: |
             gcloud auth activate-service-account --key-file ${HOME}/gcp-key.json
       - run:
-          name: Stop running version (if master)
+          name: Stop running version
           command: |
             gcloud --project ${GOOGLE_PROJECT_ID} app versions stop $CIRCLE_BRANCH --service=default
 
