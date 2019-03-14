@@ -12,6 +12,6 @@ addict==2.1.1
 Flask-Env==1.0.1
 rope==0.10.7
 numpy==1.13.1
-requests==2.17.3
+requests==2.21.0
 requests-toolbelt==0.8.0
 gunicorn==19.7.1
