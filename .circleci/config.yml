@@ -86,12 +86,6 @@ workflows:
           filters:
             tags:
               only: /^prod.*/
-      - api-tests:
-          requires:
-            - deploy
-          filters:
-            tags:
-              only: /^prod.*/
       - stop-instance:
           requires:
             - api-tests
