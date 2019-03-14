@@ -48,24 +48,6 @@ jobs:
               exit 1
             fi
 
-
-
-  api-tests:
-    docker:
-      - image: python:2.7
-    environment:
-      GOOGLE_PROJECT_ID: open-targets-library
-    steps:
-      - checkout
-      - run:
-          name: Install requests library
-          command: pip install requests
-      - run:
-          name: Trigger runscope tests on deployed branch
-          command: |
-            set -o allexport
-            python .circleci/runscope.py
-
   stop-instance:
     working_directory: ~/circulate
     docker:
