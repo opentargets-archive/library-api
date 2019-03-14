@@ -9,7 +9,7 @@ jobs:
     environment:
       #ES_GRAPH_URL gets substituted by our CI for production
       GOOGLE_PROJECT_ID: open-targets-library
-      ES_MAIN_URL: 'http://be-es-debian-3n-node01:39200,http://be-es-debian-3n-node02:39200,http://be-es-debian-3n-node03:39200'
+      ES_MAIN_URL: 'http://es-190313-102133.es-190313-102133.il4.europe-west1.lb.open-targets-library.internal:9200'
     steps:
       - checkout
       - run:
