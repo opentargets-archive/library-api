@@ -87,6 +87,4 @@ workflows:
             tags:
               only: /^prod.*/
       - stop-instance:
-          requires:
-            - api-tests
 
