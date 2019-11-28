@@ -2,7 +2,7 @@ elasticsearch==5.3
 elasticsearch-xpack==5.0.0
 zappa==0.45.1
 certifi
-Flask==0.12.1
+Flask==1.0
 Flask-Cors==3.0.3
 networkx==1.11
 future
