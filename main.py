@@ -452,13 +452,13 @@ def search_get():
             #     "significant_terms": {"field": "keywords"}
             # },
             "journal_abbr_significant_terms": {
-                "significant_terms": {"field": "journal.medlineAbbreviation"}
+                "significant_terms": {"field": "journal.medlineAbbreviation.keyword"}
             },
             # "chemicals_name_significant_terms": {
             #     "significant_terms": {"field": "chemicals.name"}
             # },
             "authors_significant_terms": {
-                "significant_terms": {"field": "authors.short_name"}
+                "significant_terms": {"field": "authors.short_name.keyword"}
             },
             "pub_date_histogram": {
                 "date_histogram": {
@@ -467,7 +467,7 @@ def search_get():
                 }
             },
             "acronym_significant_terms": {
-                "significant_terms": {"field": "text_mined_entities.nlp.named_entities",
+                "significant_terms": {"field": "text_mined_entities.nlp.named_entities.keyword",
                                       # "mutual_information": {
                                       #     "include_negatives": False
                                       # },
@@ -477,7 +477,7 @@ def search_get():
             },
             "genes": {
                 "significant_terms": {
-                    "field": "text_mined_entities.nlp.tagged_entities_grouped.GENE|OPENTARGETS.reference",
+                    "field": "text_mined_entities.nlp.tagged_entities_grouped.GENE|OPENTARGETS.reference.keyword",
                     "size": 20,
                     "mutual_information": {}
 
@@ -498,7 +498,7 @@ def search_get():
             },
             "diseases": {
                 "significant_terms": {
-                    "field": "text_mined_entities.nlp.tagged_entities_grouped.DISEASE|OPENTARGETS.reference",
+                    "field": "text_mined_entities.nlp.tagged_entities_grouped.DISEASE|OPENTARGETS.reference.keyword",
                     "size": 20,
                     "mutual_information": {}
 
@@ -521,7 +521,7 @@ def search_get():
             },
             "drugs": {
                 "significant_terms": {
-                    "field": "text_mined_entities.nlp.tagged_entities_grouped.DRUG|CHEMBL.reference",
+                    "field": "text_mined_entities.nlp.tagged_entities_grouped.DRUG|CHEMBL.reference.keyword",
                     "size": 20,
                     "mutual_information": {}
 
@@ -542,7 +542,7 @@ def search_get():
             },
             "phenotypes": {
                 "significant_terms": {
-                    "field": "text_mined_entities.nlp.tagged_entities_grouped.PHENOTYPE|HPO.reference",
+                    "field": "text_mined_entities.nlp.tagged_entities_grouped.PHENOTYPE|HPO.reference.keyword",
                     "size": 20,
                     "mutual_information": {}
                 },
@@ -561,7 +561,7 @@ def search_get():
                 }
             },
             "top_chunks_significant_terms": {
-                "significant_terms": {"field": "text_mined_entities.nlp.top_chunks",
+                "significant_terms": {"field": "text_mined_entities.nlp.top_chunks.keyword",
                                       "mutual_information": {
                                           "include_negatives": False
                                       },
@@ -1406,7 +1406,7 @@ def get_sbj_obj_agg(query,
                 # else:
                 data_aggs[entity_type.lower() + '_' + sem_type] = {
                     "significant_terms": {
-                        "field": "concept.%s.%s.reference" % (semtype2tagindex[sem_type], entity_type),
+                        "field": "concept.%s.%s.reference.keyword" % (semtype2tagindex[sem_type], entity_type),
                         "size": int(elements_count * count_weights[entity_type]),
                         "min_doc_count": min_doc_count,
                         "exclude": FILTERED_NODES,
