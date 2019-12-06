@@ -582,7 +582,7 @@ def search_get():
                         "top_hits": {
                             "sort": [
                                 {
-                                    "text_mined_entities.nlp.abbreviations.long": {
+                                    "text_mined_entities.nlp.abbreviations.long.keyword": {
                                         "order": "desc"
                                     }
                                 }
