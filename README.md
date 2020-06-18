@@ -29,7 +29,7 @@ Note
 make sure the following command is run in your elasticsearch to increase the sie of the graph LINK can handle
 
 ```
-curl -XPUT 'http://elasticsearch_url:9200/pubmed-19-concept/_settings' -H 'Content-Type: application/json' -d'{"index" : {"max_adjacency_matrix_filters":500}}'
+curl -XPUT 'http://elasticsearch_url:9200/pubmed-20-concept/_settings' -H 'Content-Type: application/json' -d'{"index" : {"max_adjacency_matrix_filters":500}}'
 ```
 
 ## Deploy
