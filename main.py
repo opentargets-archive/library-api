@@ -51,19 +51,19 @@ NONWORDCHARS_REGEX = re.compile(r'\W+', flags=re.IGNORECASE | re.UNICODE)
 ES_MAIN_URL = os.environ["ES_MAIN_URL"].split(',')
 ES_GRAPH_URL = os.environ["ES_GRAPH_URL"].split(',')
 
-PUB_INDEX_LAMBDA = 'pubmed-19'
+PUB_INDEX_LAMBDA = 'pubmed-20'
 PUB_DOC_TYPE = 'publication'
 
-PUB_INDEX = 'pubmed-19'
+PUB_INDEX = 'pubmed-20'
 # PUB_DOC_TYPE = 'publication'
 
-CONCEPT_INDEX = 'pubmed-19-concept'
+CONCEPT_INDEX = 'pubmed-20-concept'
 CONCEPT_DOC_TYPE = 'concept'
 
-MARKED_INDEX = 'pubmed-19-taggedtext'
+MARKED_INDEX = 'pubmed-20-taggedtext'
 MARKED_DOC_TYPE = 'taggedtext'
 
-BIOENTITY_INDEX = 'pubmed-19-bioentity'
+BIOENTITY_INDEX = 'pubmed-20-bioentity'
 BIOENTITY_DOC_TYPE = 'bioentity'
 
 es_graph = Elasticsearch(ES_GRAPH_URL,
