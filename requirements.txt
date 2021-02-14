@@ -10,7 +10,7 @@ jmespath==0.9.3
 python-louvain==0.7
 addict==2.1.1
 Flask-Env==1.0.1
-rope==0.10.7
+rope==0.11.0
 numpy==1.13.1
 requests==2.21.0
 requests-toolbelt==0.8.0
